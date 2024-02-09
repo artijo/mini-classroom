@@ -20,6 +20,7 @@ public class Room {
 	private String codeRoom;
 	private String nameRoom;
 	private String thumbnail;
+	
 	@ManyToOne
 	@JoinColumn(name = "idTeacher")
 	private Teacher teacher;
