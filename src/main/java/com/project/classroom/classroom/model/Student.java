@@ -1,5 +1,7 @@
 package com.project.classroom.classroom.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,9 +19,9 @@ public class Student {
 	private String lname;
 	private String email;
 	private String password;
-	private String createdAt;
-	private String updatedAt;
-	private String deletedAt;
+	private Date createdAt;
+	private Date updatedAt;
+	private Date deletedAt;
 	public int getIdStudent() {
 		return idStudent;
 	}
@@ -56,22 +58,22 @@ public class Student {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public String getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public String getDeletedAt() {
+	public Date getDeletedAt() {
 		return deletedAt;
 	}
-	public void setDeletedAt(String deletedAt) {
+	public void setDeletedAt(Date deletedAt) {
 		this.deletedAt = deletedAt;
 	}
 	

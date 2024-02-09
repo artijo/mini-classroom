@@ -1,5 +1,6 @@
 package com.project.classroom.classroom.model;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -22,9 +23,9 @@ public class Room {
 	@ManyToOne
 	@JoinColumn(name = "idTeacher")
 	private Teacher teacher;
-	private String createdAt;
-	private String updatedAt;
-	private String deletedAt;
+	private Date createdAt;
+	private Date updatedAt;
+	private Date deletedAt;
 	
 	
 	
@@ -58,24 +59,25 @@ public class Room {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public String getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public String getDeletedAt() {
+	public Date getDeletedAt() {
 		return deletedAt;
 	}
-	public void setDeletedAt(String deletedAt) {
+	public void setDeletedAt(Date deletedAt) {
 		this.deletedAt = deletedAt;
 	}
+	
 
 	
 	

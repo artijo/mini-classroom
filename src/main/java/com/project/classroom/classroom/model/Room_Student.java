@@ -1,5 +1,7 @@
 package com.project.classroom.classroom.model;
 
+import java.util.Date;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -21,9 +23,9 @@ public class Room_Student {
 	@JoinColumn(name = "student_id")
 	Student student;
 	
-	private String createdAt;
-	private String updatedAt;
-	private String deletedAt;
+	private Date createdAt;
+	private Date updatedAt;
+	private Date deletedAt;
 	public RoomStudentKey getId() {
 		return id;
 	}
@@ -42,22 +44,23 @@ public class Room_Student {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public String getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public String getDeletedAt() {
+	public Date getDeletedAt() {
 		return deletedAt;
 	}
-	public void setDeletedAt(String deletedAt) {
+	public void setDeletedAt(Date deletedAt) {
 		this.deletedAt = deletedAt;
 	}
+	
 }
