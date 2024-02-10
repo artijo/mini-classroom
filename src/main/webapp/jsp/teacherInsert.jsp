@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Classroom</title>
+	<title>เพิ่มงานในชั้นเรียน</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -34,7 +34,7 @@
 			        
 			    </div>
 			    
-			    <div class="rightside border rounded-lg mx-auto p-8">
+			    <div class="rightside border rounded-lg mx-auto p-8 h-fit">
 			        <div class="mb-5">
 			            <label class="block mb-2 text-sm font-medium text-gray-900">ครบกำหนด</label>
 			            <input id="datepicker" type="datetime-local" name="dueDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 

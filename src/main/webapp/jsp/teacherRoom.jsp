@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Teacher Page</title>
+	<title>หน้าหลัก - Teacher</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>

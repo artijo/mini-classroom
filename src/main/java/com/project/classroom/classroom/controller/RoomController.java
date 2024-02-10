@@ -97,8 +97,14 @@ public class RoomController {
 	    newAssignment.setDetail(detail);
 	    newAssignment.setFullScore(fullScore);
 	    newAssignment.setRoom(roomId);
+	    newAssignment.setCreatedAt(new Date());
 	    assignmentInterface.save(newAssignment);
 	    return "redirect:/roomTeacher/room/" + idRoom;
+	}
+	
+	@GetMapping("/assignment/{idAssignment}")
+	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model) {
+		return "teacherAssignment";
 	}
 
 }

@@ -12,7 +12,7 @@ public interface AssignmentInterface extends CrudRepository<Assignment, Integer>
 	String sqlByIdRoom = "SELECT * FROM assignment a WHERE id_room = ?";
 	@Query(value = sqlByIdRoom,nativeQuery = true)
 	List<Assignment> getAssignmentOnRoom(Integer idRoom);
-
+	
 	
 	
 }
