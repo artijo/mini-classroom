@@ -1,5 +1,7 @@
 package com.project.classroom.classroom.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -20,7 +22,7 @@ public class Assignment {
 	private String detail;
 	private Date dueDate;
 	private String file;
-	private String fullScore;
+	private int fullScore;
 	@ManyToOne
 	@JoinColumn(name = "idRoom")
 	private Room room;
@@ -48,8 +50,11 @@ public class Assignment {
 	public Date getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+	public void setDueDate(String dueDate) throws Exception {
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		Date date = inputFormat.parse(dueDate);
+		this.dueDate = date;
+		System.out.println(dueDate);
 	}
 	public String getFile() {
 		return file;
@@ -57,10 +62,10 @@ public class Assignment {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	public String getFullScore() {
+	public int getFullScore() {
 		return fullScore;
 	}
-	public void setFullScore(String fullScore) {
+	public void setFullScore(int fullScore) {
 		this.fullScore = fullScore;
 	}
 	public Room getRoom() {

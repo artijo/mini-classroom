@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,10 @@
 	<title>Teacher Page</title>
 </head>
 <body>
+
+	
+	<a href="/roomTeacher/insert/${room[0].idRoom}">เพิ่มงานในชั่นเรียน </a>
+	
 	<c:forEach items="${room}" var="rooms">
 		<div style="border:solid 1px black; padding:10px;">
 			Name : ${rooms.nameRoom}<br>
