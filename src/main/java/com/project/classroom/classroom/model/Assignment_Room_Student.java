@@ -28,6 +28,8 @@ public class Assignment_Room_Student {
 	@JoinColumn(name = "student_id")
 	Student student;
 	
+	private int score;
+	private String filePath;
 	private Date createdAt;
 	private Date updatedAt;
 	private Date deletedAt;
@@ -73,6 +75,18 @@ public class Assignment_Room_Student {
 	}
 	public void setDeletedAt(Date deletedAt) {
 		this.deletedAt = deletedAt;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	
 	

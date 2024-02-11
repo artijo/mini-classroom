@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
+import com.project.classroom.classroom.model.Assignment_Room_Student;
+import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
+import com.project.classroom.classroom.model.Room_Student;
+import com.project.classroom.classroom.model.Room_StudentInterface;
+import com.project.classroom.classroom.model.Student;
+import com.project.classroom.classroom.model.StudentInterface;
 import com.project.classroom.classroom.model.TeacherInterface;
 
 
@@ -34,6 +41,12 @@ public class RoomController {
 	RoomInterface roomInterface;
 	@Autowired
 	AssignmentInterface assignmentInterface;
+	@Autowired
+	Assignment_Room_StudentInterface assignment_Room_Student;
+	@Autowired
+	Room_StudentInterface room_studentInterface;
+	@Autowired
+	StudentInterface studentinterface;
 	
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")
@@ -65,7 +78,7 @@ public class RoomController {
 	        }
 	        file.transferTo(new File(directory, uniqueFileName));
 
-	        return "Upload successful";
+	        return uniqueFileName;
 	    } catch (IOException e) {
 	        e.printStackTrace(); 
 	        return "Upload unsuccessful";
@@ -84,11 +97,8 @@ public class RoomController {
 	    Room roomId = new Room();
 	    roomId.setIdRoom(idRoom);
 	    Assignment newAssignment = new Assignment();
-
 	    if (!file.isEmpty()) {
-	        String callUpload = upload(file);
-	        System.out.println(callUpload);
-	        newAssignment.setFile(file.getOriginalFilename());
+	        newAssignment.setFile(upload(file));
 	    } else {
 	        newAssignment.setFile(null);
 	    }
@@ -101,12 +111,17 @@ public class RoomController {
 	    assignmentInterface.save(newAssignment);
 	    return "redirect:/roomTeacher/room/" + idRoom;
 	}
-	
+
 	@GetMapping("/assignment/{idAssignment}")
 	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model) {
+		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
+		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
+		Iterable<Student> student = studentinterface.findAll(); 
+		model.addAttribute("assignment",assignment);
+		model.addAttribute("allListAssignment",allListAssignment);
+		model.addAttribute("student",student);
 		return "teacherAssignment";
 	}
-
 }
 
 

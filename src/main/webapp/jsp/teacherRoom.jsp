@@ -8,13 +8,7 @@
 	<title>หน้าหลัก - Teacher</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-	<%
-		
-	
-	
-	%>
-	
+<body>	
 	 <div class="main container">
         <div class="content max-w-5xl mx-auto my-5">
             <div class="Thumbnail mb-5 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
@@ -49,7 +43,7 @@
                             </div>
                             <div class="info w-3/4">
                                 <h5 class="line-clamp-1 font-medium text-sm">
-                                    ${ass.title}
+                                    <a href="/roomTeacher/assignment/${ass.idAssignment}">${ass.title}</a>
                                 </h5>
                                 <p class="text-xs text-gray">${ass.createdAt}</p>
                             </div>
