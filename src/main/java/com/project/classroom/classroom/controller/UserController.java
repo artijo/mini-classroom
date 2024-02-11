@@ -40,6 +40,9 @@ public class UserController {
 					Cookie cookie = new Cookie("user", std.getStudentId());
 					cookie.setMaxAge(60 * 60 * 24 * 30);
 					res.addCookie(cookie);
+					Cookie cookie2 = new Cookie("role", "student");
+					cookie2.setMaxAge(60 * 60 * 24 * 30);
+					res.addCookie(cookie2);
 					return "redirect:/";
 				}
 			}
@@ -50,6 +53,9 @@ public class UserController {
 					Cookie cookie = new Cookie("user", teacher.getIdTeacher()+"");
 					cookie.setMaxAge(60 * 60 * 24 * 30);
 					res.addCookie(cookie);
+					Cookie cookie2 = new Cookie("role", "teacher");
+					cookie2.setMaxAge(60 * 60 * 24 * 30);
+					res.addCookie(cookie2);
 					return "redirect:/";
 				}
 			}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>hello world</h1>
+	<h1>hello
+		<c:if test="${teacher != null}">
+			<c:out value="${teacher.fname}"></c:out> Your teacher.
+		</c:if>
+		<c:if test="${ student != null }">
+			<c:out value="${student.fname}"></c:out>
+		</c:if>
+	</h1>
 </body>
 </html>
