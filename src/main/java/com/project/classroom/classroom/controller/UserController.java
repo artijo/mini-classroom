@@ -1,8 +1,6 @@
 package com.project.classroom.classroom.controller;
 
-import java.security.SecureRandom;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,8 @@ import com.project.classroom.classroom.model.Teacher;
 import com.project.classroom.classroom.model.TeacherInterface;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -31,16 +31,15 @@ public class UserController {
 		return "login";
 	}
 	@PostMapping("/login")
-	public String loginPost(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role) {
+	public String loginPost(HttpServletResponse res,@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role) {
 		if (role.equals("student")) {
 			Student std = studentInterface.findByEmail(email);
 			if (std != null) {
 				BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), std.getPassword());
-				System.out.println(password);
-				System.out.println(std.getPassword());
-				System.out.println(result.verified);
 				if (result.verified) {
-					System.out.println("verified");
+					Cookie cookie = new Cookie("user", std.getStudentId());
+					cookie.setMaxAge(60 * 60 * 24 * 30);
+					res.addCookie(cookie);
 					return "redirect:/";
 				}
 			}
@@ -48,6 +47,9 @@ public class UserController {
 			Teacher teacher = teacherInterface.findByEmail(email);
 			if (teacher != null) {
 				if (BCrypt.verifyer().verify(password.toCharArray(), teacher.getPassword()).verified) {
+					Cookie cookie = new Cookie("user", teacher.getIdTeacher()+"");
+					cookie.setMaxAge(60 * 60 * 24 * 30);
+					res.addCookie(cookie);
 					return "redirect:/";
 				}
 			}
