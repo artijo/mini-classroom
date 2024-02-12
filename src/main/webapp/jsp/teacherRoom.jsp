@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.project.classroom.classroom.controller.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,10 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>	
+	<%
+	
+	
+	%>
 	 <div class="main container">
         <div class="content max-w-5xl mx-auto my-5">
             <div class="Thumbnail mb-5 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
@@ -45,7 +50,9 @@
                                 <h5 class="line-clamp-1 font-medium text-sm">
                                     <a href="/roomTeacher/assignment/${ass.idAssignment}">${ass.title}</a>
                                 </h5>
-                                <p class="text-xs text-gray">${ass.createdAt}</p>
+                                <p class="text-xs text-gray">
+                                	${RoomController.covertToThaiTime(ass.createdAt)}
+                                </p>
                             </div>
                      	</div>
                 	</c:forEach>

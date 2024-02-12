@@ -2,8 +2,10 @@ package com.project.classroom.classroom.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -47,6 +49,68 @@ public class RoomController {
 	Room_StudentInterface room_studentInterface;
 	@Autowired
 	StudentInterface studentinterface;
+	
+	
+	public static String covertToThaiTime(Date date) {
+	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy", new Locale("th", "TH"));
+	    String formattedDate = thaitime.format(date);
+	    String thaiString;
+	    String[] arrOfStr = formattedDate.split("/");
+	    switch (arrOfStr[1]) {
+	        case "01": {
+	            thaiString = arrOfStr[0] + " มกราคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "02": {
+	            thaiString = arrOfStr[0] + " กุมภาพันธ์ " + arrOfStr[2];
+	            break;
+	        }
+	        case "03": {
+	            thaiString = arrOfStr[0] + " มีนาคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "04": {
+	            thaiString = arrOfStr[0] + " เมษายน " + arrOfStr[2];
+	            break;
+	        }
+	        case "05": {
+	            thaiString = arrOfStr[0] + " พฤษภาคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "06": {
+	            thaiString = arrOfStr[0] + " มิถุนายน " + arrOfStr[2];
+	            break;
+	        }
+	        case "07": {
+	            thaiString = arrOfStr[0] + " กรกฎาคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "08": {
+	            thaiString = arrOfStr[0] + " สิงหาคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "09": {
+	            thaiString = arrOfStr[0] + " กันยายน " + arrOfStr[2];
+	            break;
+	        }
+	        case "10": {
+	            thaiString = arrOfStr[0] + " ตุลาคม " + arrOfStr[2];
+	            break;
+	        }
+	        case "11": {
+	            thaiString = arrOfStr[0] + " พฤศจิกายน " + arrOfStr[2];
+	            break;
+	        }
+	        case "12": {
+	            thaiString = arrOfStr[0] + " ธันวาคม " + arrOfStr[2];
+	            break;
+	        }
+	        default:
+	            thaiString = formattedDate;
+	    }
+	    return thaiString;
+	}
+
 	
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")

@@ -1,7 +1,6 @@
-<%@page import="com.project.classroom.classroom.model.Assignment_Room_Student"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.project.classroom.classroom.controller.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
 		<c:forEach items="${assignment}" var="ass">
 			ชื่อ: ${ass.title}<br>
 			คุณครู: ${ass.room.teacher.fname} ${ass.room.teacher.lname}<br>
-			กำหนดส่ง: ${ass.dueDate} <br>
+			กำหนดส่ง:${RoomController.covertToThaiTime(ass.dueDate)}<br>
 			รายละเอียด<br>
 			<c:choose>
 			    <c:when test="${empty ass.detail}">
