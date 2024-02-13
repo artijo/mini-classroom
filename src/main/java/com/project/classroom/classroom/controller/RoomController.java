@@ -49,67 +49,72 @@ public class RoomController {
 	Room_StudentInterface room_studentInterface;
 	@Autowired
 	StudentInterface studentinterface;
-	
-	
+	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
 	public static String covertToThaiTime(Date date) {
-	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy", new Locale("th", "TH"));
+	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", new Locale("th", "TH"));
 	    String formattedDate = thaitime.format(date);
-	    String thaiString;
-	    String[] arrOfStr = formattedDate.split("/");
-	    switch (arrOfStr[1]) {
+	    String[] arrOfStr = formattedDate.split(" ");
+	    String[] dateArr = arrOfStr[0].split("/");
+	    String thaiDateString;
+	    String thaiTimeString = arrOfStr[1];
+	    
+	    switch (dateArr[1]) {
 	        case "01": {
-	            thaiString = arrOfStr[0] + " มกราคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " มกราคม " + dateArr[2];
 	            break;
 	        }
 	        case "02": {
-	            thaiString = arrOfStr[0] + " กุมภาพันธ์ " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " กุมภาพันธ์ " + dateArr[2];
 	            break;
 	        }
 	        case "03": {
-	            thaiString = arrOfStr[0] + " มีนาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " มีนาคม " + dateArr[2];
 	            break;
 	        }
 	        case "04": {
-	            thaiString = arrOfStr[0] + " เมษายน " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " เมษายน " + dateArr[2];
 	            break;
 	        }
 	        case "05": {
-	            thaiString = arrOfStr[0] + " พฤษภาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " พฤษภาคม " + dateArr[2];
 	            break;
 	        }
 	        case "06": {
-	            thaiString = arrOfStr[0] + " มิถุนายน " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " มิถุนายน " + dateArr[2];
 	            break;
 	        }
 	        case "07": {
-	            thaiString = arrOfStr[0] + " กรกฎาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " กรกฎาคม " + dateArr[2];
 	            break;
 	        }
 	        case "08": {
-	            thaiString = arrOfStr[0] + " สิงหาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " สิงหาคม " + dateArr[2];
 	            break;
 	        }
 	        case "09": {
-	            thaiString = arrOfStr[0] + " กันยายน " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " กันยายน " + dateArr[2];
 	            break;
 	        }
 	        case "10": {
-	            thaiString = arrOfStr[0] + " ตุลาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " ตุลาคม " + dateArr[2];
 	            break;
 	        }
 	        case "11": {
-	            thaiString = arrOfStr[0] + " พฤศจิกายน " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " พฤศจิกายน " + dateArr[2];
 	            break;
 	        }
 	        case "12": {
-	            thaiString = arrOfStr[0] + " ธันวาคม " + arrOfStr[2];
+	            thaiDateString = dateArr[0] + " ธันวาคม " + dateArr[2];
 	            break;
 	        }
 	        default:
-	            thaiString = formattedDate;
+	            thaiDateString = arrOfStr[0];
 	    }
-	    return thaiString;
+	    
+	    return thaiDateString + " " + thaiTimeString;
 	}
+
 
 	
 //	GetRoom after click
@@ -134,8 +139,6 @@ public class RoomController {
 	    try {
 	        String originalFilename = file.getOriginalFilename();
 	        String uniqueFileName = System.currentTimeMillis() + "_" + originalFilename;
-	        String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
-	                                 "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
 	        File directory = new File(uploadDirectory);
 	        if (!directory.exists()) {
 	            directory.mkdirs();
