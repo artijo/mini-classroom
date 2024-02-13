@@ -9,5 +9,4 @@ public interface RoomInterface extends CrudRepository<Room, Integer> {
 
 	Iterable<Room> findAll();
 	List<Room> findByIdRoom(Integer idRoom); 
-	
 }
