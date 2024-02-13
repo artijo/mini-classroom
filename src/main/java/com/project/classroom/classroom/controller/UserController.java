@@ -63,6 +63,17 @@ public class UserController {
 		return "redirect:/login";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpServletResponse res) {
+		Cookie cookie = new Cookie("user", "");
+		cookie.setMaxAge(0);
+		res.addCookie(cookie);
+		Cookie cookie2 = new Cookie("role", "");
+		cookie2.setMaxAge(0);
+		res.addCookie(cookie2);
+		return "redirect:/login";
+	}
+	
 	@GetMapping("/register")
 	public String register() {
 		return "register";
