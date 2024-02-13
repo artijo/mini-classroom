@@ -73,7 +73,12 @@ public class Assignment {
 		return fullScore;
 	}
 	public void setFullScore(int fullScore) {
-		this.fullScore = fullScore;
+		if(fullScore == 0) {
+			this.fullScore = 0;
+		}else {
+			this.fullScore = fullScore;
+		}
+		
 	}
 	public Room getRoom() {
 		return room;

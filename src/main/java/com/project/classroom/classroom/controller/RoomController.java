@@ -138,13 +138,12 @@ public class RoomController {
 	public String upload(MultipartFile file) {
 	    try {
 	        String originalFilename = file.getOriginalFilename();
-	        String uniqueFileName = System.currentTimeMillis() + "_" + originalFilename;
+	        String uniqueFileName = System.currentTimeMillis() + "&" + originalFilename;
 	        File directory = new File(uploadDirectory);
 	        if (!directory.exists()) {
 	            directory.mkdirs();
 	        }
 	        file.transferTo(new File(directory, uniqueFileName));
-
 	        return uniqueFileName;
 	    } catch (IOException e) {
 	        e.printStackTrace(); 
