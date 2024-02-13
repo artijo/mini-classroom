@@ -45,16 +45,23 @@ public class Assignment {
 		return detail;
 	}
 	public void setDetail(String detail) {
-		this.detail = detail;
+		if(detail.equals("") || detail == null) {
+			this.detail = null;
+		}else {
+			this.detail = detail;
+		}
 	}
 	public Date getDueDate() {
 		return dueDate;
 	}
 	public void setDueDate(String dueDate) throws Exception {
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		Date date = inputFormat.parse(dueDate);
-		this.dueDate = date;
-		System.out.println(dueDate);
+		if(dueDate == null || dueDate.equals("")) {
+			this.dueDate = null;
+		}else {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+			Date date = inputFormat.parse(dueDate);
+			this.dueDate = date;
+		}
 	}
 	public String getFile() {
 		return file;
@@ -66,7 +73,12 @@ public class Assignment {
 		return fullScore;
 	}
 	public void setFullScore(int fullScore) {
-		this.fullScore = fullScore;
+		if(fullScore == 0) {
+			this.fullScore = 0;
+		}else {
+			this.fullScore = fullScore;
+		}
+		
 	}
 	public Room getRoom() {
 		return room;

@@ -2,8 +2,10 @@ package com.project.classroom.classroom.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -47,6 +49,73 @@ public class RoomController {
 	Room_StudentInterface room_studentInterface;
 	@Autowired
 	StudentInterface studentinterface;
+	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
+	public static String covertToThaiTime(Date date) {
+	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", new Locale("th", "TH"));
+	    String formattedDate = thaitime.format(date);
+	    String[] arrOfStr = formattedDate.split(" ");
+	    String[] dateArr = arrOfStr[0].split("/");
+	    String thaiDateString;
+	    String thaiTimeString = arrOfStr[1];
+	    
+	    switch (dateArr[1]) {
+	        case "01": {
+	            thaiDateString = dateArr[0] + " มกราคม " + dateArr[2];
+	            break;
+	        }
+	        case "02": {
+	            thaiDateString = dateArr[0] + " กุมภาพันธ์ " + dateArr[2];
+	            break;
+	        }
+	        case "03": {
+	            thaiDateString = dateArr[0] + " มีนาคม " + dateArr[2];
+	            break;
+	        }
+	        case "04": {
+	            thaiDateString = dateArr[0] + " เมษายน " + dateArr[2];
+	            break;
+	        }
+	        case "05": {
+	            thaiDateString = dateArr[0] + " พฤษภาคม " + dateArr[2];
+	            break;
+	        }
+	        case "06": {
+	            thaiDateString = dateArr[0] + " มิถุนายน " + dateArr[2];
+	            break;
+	        }
+	        case "07": {
+	            thaiDateString = dateArr[0] + " กรกฎาคม " + dateArr[2];
+	            break;
+	        }
+	        case "08": {
+	            thaiDateString = dateArr[0] + " สิงหาคม " + dateArr[2];
+	            break;
+	        }
+	        case "09": {
+	            thaiDateString = dateArr[0] + " กันยายน " + dateArr[2];
+	            break;
+	        }
+	        case "10": {
+	            thaiDateString = dateArr[0] + " ตุลาคม " + dateArr[2];
+	            break;
+	        }
+	        case "11": {
+	            thaiDateString = dateArr[0] + " พฤศจิกายน " + dateArr[2];
+	            break;
+	        }
+	        case "12": {
+	            thaiDateString = dateArr[0] + " ธันวาคม " + dateArr[2];
+	            break;
+	        }
+	        default:
+	            thaiDateString = arrOfStr[0];
+	    }
+	    
+	    return thaiDateString + " " + thaiTimeString;
+	}
+
+
 	
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")
@@ -69,15 +138,12 @@ public class RoomController {
 	public String upload(MultipartFile file) {
 	    try {
 	        String originalFilename = file.getOriginalFilename();
-	        String uniqueFileName = System.currentTimeMillis() + "_" + originalFilename;
-	        String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
-	                                 "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
+	        String uniqueFileName = System.currentTimeMillis() + "&" + originalFilename;
 	        File directory = new File(uploadDirectory);
 	        if (!directory.exists()) {
 	            directory.mkdirs();
 	        }
 	        file.transferTo(new File(directory, uniqueFileName));
-
 	        return uniqueFileName;
 	    } catch (IOException e) {
 	        e.printStackTrace(); 
