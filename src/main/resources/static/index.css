@@ -1,0 +1,74 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Mitr&family=Noto+Serif+Thai&display=swap');
+* {
+    font-family: 'Mitr', sans-serif;
+    font-weight: 500;
+}
+
+a.logout {
+    color: white;
+    background-color: #9b0101;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.container {
+    width: 90%;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.container a {
+    text-decoration: none;
+    color: #000;
+}
+
+.item {
+    display: inline-block;
+    width: 400px;
+    height: 280px;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px gray;
+    margin: auto;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.item img#posterImage {
+    width: 90%;
+    height: 150px;
+    margin: 20px;
+}
+
+.item h4 {
+    margin: 0 20px;
+}
+
+img.iconAddRoom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+div.container h1 {
+    font-weight: 300;
+    color: gray;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.item img#deleteicon {
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    float: right;
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+}

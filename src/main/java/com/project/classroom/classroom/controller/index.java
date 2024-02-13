@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-public class Index {
+public class index {
 	@Autowired
 	TeacherInterface teacherInterface;
 	@Autowired
