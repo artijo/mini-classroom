@@ -61,40 +61,41 @@
 				</div>
 				<div class="lside w-2/4 border relative rounded-lg shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] ">
 					<h1 class="absolute text-2xl text-white bg-gray-600 py-2 px-3 w-fit text-start font-semibold rounded-tl-lg rounded-br-lg mb-5">งานของนักศึกษา</h1>
-					<div class="scoreAss relative mt-20 mx-5">
-						<div class="overflow-y-auto h-[500px] border-2">
-							<c:forEach items="${student}" var="item">
-								<c:choose>
-			    <c:when test="${empty allListAssignment}">
-			    	<div class="mx-auto m-2 p-2">
-						ไม่มีใครส่ง
-					</div>
-			    </c:when>
-			    <c:otherwise>
-			    	<c:forEach items="${allListAssignment}" var="list">
-				    		<c:choose>
-					    		<c:when test="${item.studentId == list.student.studentId}">
-					    			<div class="m-2 p-2 border">
-					       				name: ${item.fname} ${item.lname}<br>
-					       				student-id: ${item.studentId}<br>
-					       				สถานะ: ส่งแล้ว
-					       			</div>
-					    		</c:when>
+					<div class="scoreAss relative mt-20 mx-1">
+						<div class="overflow-y-auto h-[300px]">
+							<c:choose>
+								<c:when test="${empty allListAssignment}">
+									<div class="mx-auto  text-center">
+										ไม่มีคนส่ง
+									</div>
+								</c:when>
 								<c:otherwise>
-									<div class="border m-2 p-2">
-					       				name: ${item.fname} ${item.lname}<br>
-					       				student-id: ${item.studentId}<br>
-					       				สถานะ: ยังไม่ส่ง
-					       			</div>
-								
-								</c:otherwise>			    	
-					    	</c:choose>
-				    	</c:forEach>
-				    </c:otherwise>
-				</c:choose>
-							
-							
-							</c:forEach>
+									<c:forEach items="${student}" var="stuItem">
+										<c:forEach items="${allListAssignment}" var="assItem">
+											<c:choose>
+												<c:when test="${stuItem.studentId == assItem.student.studentId }">
+													<div class="box">
+														<img src="">
+													
+													</div>
+												</c:when>
+												<c:otherwise>
+													<div class="box">
+													
+													
+													</div>
+												</c:otherwise>
+											
+											
+											</c:choose>
+										
+										</c:forEach>
+										
+										
+									
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					
 					</div>

@@ -35,8 +35,7 @@ public class studentIndexController {
 	        newRoom.setNameRoom(nameRoom);
 	        newRoom.setCreatedAt(new Date());
 	        newRoom.setThumbnail("image/default_poster.png");
-	        roomStdInterface.save(newRoom);
-	     
+	        roomStdInterface.save(newRoom);	     
 	        return "redirect:/indexteach";
 	    }
 }
