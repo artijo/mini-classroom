@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>Forgot Password</h1>
-	<form action="/reset" method="post">
+	<form action="/forgot" method="post">
 	<label>คุณเป็น: </label>
 	    <input type="radio" id="student" name="role" value="student" required>
 	    <label for="student">นักเรียน</label>
@@ -18,14 +18,12 @@
 	            <br>
 		<label for="email">Email:</label> <input type="email" id="email"
 			name="email" required><br>
-			<label for="password">รหัสผ่านใหม่</label>
-			<input type="password" id="password" name="password" required><br>
-			<label for="passwordcf">ยืนยันรหัสผ่าน</label>
-			<input type="password" id="passwordcf" name="passwordcf" required><br>
+		<center>
 			<c:if test="${not empty error}">
-			    <c:out value="${error}"></c:out>
-			  </c:if>
-		<br> <input type="submit" value="Submit">
+				<span style="color: red">${error}</span>
+				<br>
+				</c:if>
+				<input type="submit" value="Submit">
 	</form>
 	<br>
 	<a href="login">Back to Login</a>
