@@ -20,5 +20,7 @@ public interface AssignmentInterface extends CrudRepository<Assignment, Integer>
 	@Query(value = sqlByIdRoom,nativeQuery = true)
 	List<Assignment> getAssignmentOnRoom(Integer idRoom);
 	
+	
+
 
 }
