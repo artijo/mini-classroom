@@ -68,12 +68,17 @@
             }
 
         }
+        
+        function cancelAndReturn() {
+            togglePopup();
+            window.location.href = '/indexteacher'; 
+        }
     </script>
 </head>
 <body>
 	<nav>
         <img src="image/logo.png" alt="โลโก้">
-        <a href="" class="logout">ออกจากระบบ</a>
+        <a href="/logout" class="logout">ออกจากระบบ</a>
     </nav>
     <div class="container">
      <c:if test="${empty roomList}">
@@ -81,9 +86,9 @@
     </c:if>
 
     <c:forEach var="room" items="${roomList}">
-        <div class="item">
+        <div class="item">  
             <div class="poster">
-                <a href="">
+                <a href="/roomTeacher/room/${room.idRoom}">
                     <img src="http://localhost:8899/image/${room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
                 </a>
             </div>
@@ -94,111 +99,7 @@
             <img src="" alt="">
         </div>
     </c:forEach>
-        <!-- 
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-        
-                <div class="item">
-            <div class="poster">
-                <a href="{{ route('postTeacher', ['id' => $room->id]) }}">
-                    <img src="{{ asset($room->photoRoom) }}" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-                
-            </div>
-            <h4>{{ $room->nameRoom }} </h4>
-            
-            <a href="/indexTeacher/addRoom/delete/{{$room->id}}" >
-                <img src="img/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-    @empty
-        <h1>คุณยังไม่ได้สร้างชั้นเรียน</h1>
-    @endforelse
-    
-    
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div>
-        <div class="item">
-            <div class="poster">
-                <a href="">
-                    <img src="image/default_poster.png" alt="รูปโปสเตอร์" id="posterImage">
-                </a>
-
-            </div>
-            <h4>SC363204 Java Web Application Development</h4>
-
-            <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
-            </a>
-            <img src="" alt="">
-        </div> -->
+       
 
         <img src="image/addRoom.png" alt="เพิ่มห้องเรียน" class="iconAddRoom" onclick="togglePopup()">
     </div>
@@ -214,8 +115,8 @@
                 <input type="text" name="codeRoom" id="codeRoom" placeholder="กรุณากดสุ่มรหัส" readonly>
                 <input type="button" id="randomCode" value="สุ่มรหัส" onclick="generateRandomCode()">
                 <div class="btn">
-                    <input type="button" id="close-popup" value="ยกเลิก" onclick="">
-                    <input type="submit" id="submitButton" value="ยืนยัน" onclick="">
+                    <input type="button" id="close-popup" value="ยกเลิก" onclick="cancelAndReturn()">
+                    <input type="submit" id="submitButton" value="ยืนยัน" >
                 </div>
             </form>
         </div>

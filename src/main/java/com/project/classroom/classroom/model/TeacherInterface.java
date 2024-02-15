@@ -10,4 +10,7 @@ public interface TeacherInterface extends CrudRepository<Teacher, Integer>{
 	@Query(value = sqlByEmail, nativeQuery = true)
 	Teacher findByEmail(String email);
 
+	String sqlByTeacherId = "SELECT * FROM teacher WHERE id_teacher = ?";
+	@Query(value = sqlByTeacherId, nativeQuery = true)
+	Teacher findById(String id_teacher);
 }
