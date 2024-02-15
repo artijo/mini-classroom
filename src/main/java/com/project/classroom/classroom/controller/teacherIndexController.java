@@ -35,8 +35,6 @@ public class teacherIndexController {
 	@Autowired
 	TeacherInterface TeacherInterface;
 
-	@GetMapping("/indexteach")
-    public String index(Model model, jakarta.servlet.http.HttpServletRequest request) {
 	@GetMapping("/indexteacher")
     public String index(HttpServletRequest request, HttpServletResponse response,Model model) {
 		String userId = "";
@@ -70,9 +68,6 @@ public class teacherIndexController {
 	            @RequestParam("codeRoom") String codeRoom,
 	            @RequestParam("nameRoom") String nameRoom,
 	            Model model, HttpServletRequest request) throws Exception {
-	    	String userId = "";
-	            HttpServletRequest request, HttpServletResponse response,
-	            Model model) throws Exception {
 	 		String userId = "";
 			String role = "";
 			Cookie[] cookies = request.getCookies();
