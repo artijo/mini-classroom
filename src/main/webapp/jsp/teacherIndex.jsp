@@ -84,12 +84,12 @@
         <div class="item">
             <div class="poster">
                 <a href="">
-                    <img src="${room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
+                    <img src="http://localhost:8899/image/${room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
                 </a>
             </div>
             <h4>${room.nameRoom}</h4>
             <a href="">
-                <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
+                <img src="http://localhost:8899/image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
             </a>
             <img src="" alt="">
         </div>

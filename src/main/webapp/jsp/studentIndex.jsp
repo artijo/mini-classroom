@@ -34,13 +34,12 @@
                 form.submit();
             }
         }
-
     </script>
 </head>
 <body>
 <nav>
-        <img src="image/logo.png" alt="โลโก้">
-        <a href="" class="logout">ออกจากระบบ</a>
+	<img src="image/logo.png" alt="โลโก้">
+    <a href="" class="logout">ออกจากระบบ</a>
     </nav>
     <div class="container">
      <c:if test="${empty roomList}">
@@ -52,10 +51,10 @@
         <div class="item">
             <div class="poster">
                 <a href="">
-                    <img src="${room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
+                    <img src="image/${room.room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
                 </a>
             </div>
-            <h4>${room.nameRoom}</h4>
+            <h4>${room.room.nameRoom}</h4>
             <a href="">
                 <img src="image/deleteicon.png" alt="iconถังขยะ" id="deleteicon" onclick="return confirm('คุณต้องการลบห้องเรียนนี้ใช่หรือไม่?')">
             </a>

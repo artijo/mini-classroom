@@ -19,9 +19,12 @@ import com.project.classroom.classroom.model.Room_StudentInterface;
 import com.project.classroom.classroom.model.Student;
 import com.project.classroom.classroom.model.StudentInterface;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 
 @Controller
 public class studentIndexController {
@@ -34,6 +37,9 @@ public class studentIndexController {
 	
 	@Autowired
 	StudentInterface StdInterface;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@GetMapping("/indexstudent")
     public String indexstd(HttpServletRequest request, HttpServletResponse response,Model model) {
@@ -51,13 +57,12 @@ public class studentIndexController {
 		}
 		Student findStdId = StdInterface.findById(userId);
 		int stdId = findStdId.getIdStudent();
-		
         Iterable<Room_Student> roomlist = roomStdInterface.findByStudentId(stdId);
         model.addAttribute("roomList", roomlist);    
         return "studentIndex";
     	}
 	
-
+		@Transactional
 	    @PostMapping("/joinRoom")
 	    public String addRoomStudent(
 	            @RequestParam("idRoom") String code_id,
@@ -79,13 +84,20 @@ public class studentIndexController {
 			Room findCodeId = roomInterface.findByCodeId(code_id);
 	    	Student findStdId = StdInterface.findById(userId);
 	    	Room_Student newRoomStudent = new Room_Student();
-	    	    newRoomStudent.setRoom(findCodeId);
-	    	    newRoomStudent.setStudent(findStdId);
-	    	    newRoomStudent.setCreatedAt(new Date());
-	    	roomStdInterface.save(newRoomStudent);
+	    	
+	    	String insetNative = "INSERT INTO room_student (room_id,student_id,created_at) VALUES (?,?,?)";
+	    
+	    	entityManager.createNativeQuery(insetNative)
+		    	.setParameter(1, findCodeId.getIdRoom())
+		    	.setParameter(2, findStdId.getIdStudent())
+		    	.setParameter(3, new Date()).executeUpdate();
+//	    	
+//	    	newRoomStudent.setRoom(findCodeId);
+//	    	newRoomStudent.setStudent(findStdId);
+//	    	newRoomStudent.setCreatedAt(new Date());
+//	    	roomStdInterface.save(newRoomStudent);
 	     
-	        return "";
-//	        eturn "redirect:/indexstudent";
+	        return "redirect:/indexstudent";
 	    }
 	    
 }

@@ -34,7 +34,7 @@
 	        <div class="content max-w-5xl mx-auto my-5">
 	            <div class="Thumbnail relative mb-5 z-0 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
 	                <span id="editIcon" class="block absolute right-0 m-2 cursor-pointer bg-pink-300 rounded-lg w-10 h-10"><img class="rounded-lg" src="http://localhost:8899/icon/icon.svg"></span>
-	                <img src="http://localhost:8899/image/wallpaper-test.webp" alt="Thumbnail //name//" class="rounded-lg w-full h-full object-fill"> 
+	                <img src="http://localhost:8899/image/${room[0].thumbnail}" alt="Thumbnail" class="rounded-lg w-full h-full object-fill"> 
 	                <span class="absolute line-clamp-1 bottom-0 p-5 text-3xl font-medium antialiased text-white">
 	                    ${room[0].nameRoom}
 	                </span>
@@ -51,7 +51,7 @@
 	                <div class="right-side w-3/4 grid grid-cols-1 gap-5">
 	                	<div class="addgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full border py-3 px-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
 		                     <div class="profile w-12 h-12">
-		                         <img src="http://localhost:8899/image/Cute-Anime-Wallpaper.png" alt="Cute anime" class="w-full h-full object-cover rounded-full">
+		                         <img src="http://localhost:8899/image/logo_crop.png" alt="Cute anime" class="w-full h-full object-cover rounded-full">
 		                     </div>
 		                     <a href="/roomTeacher/insert/${room[0].idRoom}">
 		                        <span class="text-sm font-thin text-gray-400">เพิ่มงานในชั้นเรียน</span>
