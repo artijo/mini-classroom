@@ -11,10 +11,9 @@
 <div class="container">
                     <div>
                     	<form action="/students/insert" method="post" >
-                    	<input type="file" value="แนบไฟล์" name="sentass" >
+                    	<input type="text" value="แนบไฟล์" name="sentass" >
                     	<input type="submit" value="ส่งงาน">
                     	<input type="hidden" value='<c:out value="${std_id.studentId }"></c:out>' name="stdid">
-                    	
                     	     	<input type="hidden" value='<c:out value="${room}"></c:out>' name="idRoom">
                     	<input type="hidden" value='<c:out value="${idAssignments.idAssignment}"></c:out>' name="assignment">
                     	</form>

@@ -1,7 +1,7 @@
 package com.project.classroom.classroom.controller;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
@@ -27,6 +27,9 @@ import com.project.classroom.classroom.model.TeacherInterface;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Cookie;
 
 @Controller
@@ -46,6 +49,8 @@ public class StudentController {
 	Room_StudentInterface room_studentInterface;
 	@Autowired
 	StudentInterface studentinterface;
+	@PersistenceContext
+	EntityManager  entityManager;
 	
 //	get all people
 	@GetMapping("/room/{roomId}/people")
@@ -76,28 +81,29 @@ public class StudentController {
         return "people";
 	}
 	
-//	insert ass 
+	@Transactional
 	@PostMapping("/students/insert")
 	public String  insertass(@RequestParam("sentass") String sentass ,HttpServletRequest request, HttpServletResponse response,@RequestParam("idRoom")  int idRoom,
 	@RequestParam("assignment") int assignment,
 	@RequestParam("stdid") String stdid,
 	Model m) {
-	
-		System.out.println(assignment);
 	Assignment_Room_Student assStd = new Assignment_Room_Student();
 	Room rmID =  roomInterface.findByIdRoom(idRoom).get(0);
 	Student student =  studentinterface.findByIdStudent(stdid).get(0);
 	Assignment assId =  assignmentInterface.getListByPrimaryKey(assignment).get(0);
-	assStd.setAssignment(assId);
-	assStd.setStudent(student);
-	assStd.setFilePath("ybyb");
-	assStd.setScore(0);
-	assStd.setRoom(rmID);
-	assignment_Room_Student.save(assStd);
-		return "redirect:/studentinsertAss";
+	
+	String insetNative = "INSERT INTO room_student (room_id,student_id,created_at) VALUES (?,?,?)";
+    
+	entityManager.createNativeQuery(insetNative)
+    	.setParameter(1, findCodeId.getIdRoom())
+    	.setParameter(2, findStdId.getIdStudent())
+    	.setParameter(3, new Date()).executeUpdate();
+		return "";
 	}
 	
-@GetMapping("/room/{idRoom}/assignment/{idAssignment}/submit")
+	
+	
+@GetMapping("/room/{idRoom}/{idAssignment}/submit")
 public String submit (@PathVariable("idRoom") String idRoom,@PathVariable("idAssignment") String idAssignment,Model m,HttpServletRequest request,HttpServletResponse response) {
 	String userId =" ";
 	Cookie [] cookie = request.getCookies();
@@ -108,13 +114,13 @@ public String submit (@PathVariable("idRoom") String idRoom,@PathVariable("idAss
 			}
 		}
 	}
-//	System.out.println(idRoom);
+	System.out.println(idRoom);
 	m.addAttribute("room", idRoom);
 	Assignment id_ass = assignmentInterface.getAssignmentOnRoom(Integer.parseInt(idAssignment)).get(0);
 	m.addAttribute("idAssignments", id_ass);
 	Student std_id = studentinterface.findByIdStudent(userId).get(0);
 	m.addAttribute("std_id", std_id);
-	return"studentinsertAss";
+	return "studentinsertAss";
 	
 }
 }
