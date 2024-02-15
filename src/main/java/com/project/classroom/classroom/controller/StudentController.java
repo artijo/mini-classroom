@@ -82,29 +82,23 @@ public class StudentController {
 	}
 	
 	@Transactional
-	@PostMapping("/students/insert")
-	public String  insertass(@RequestParam("sentass") String sentass ,HttpServletRequest request, HttpServletResponse response,@RequestParam("idRoom")  int idRoom,
-	@RequestParam("assignment") int assignment,
-	@RequestParam("stdid") String stdid,
-	Model m) {
-	Assignment_Room_Student assStd = new Assignment_Room_Student();
-	Room rmID =  roomInterface.findByIdRoom(idRoom).get(0);
-	Student student =  studentinterface.findByIdStudent(stdid).get(0);
-	Assignment assId =  assignmentInterface.getListByPrimaryKey(assignment).get(0);
-	
-	String insetNative = "INSERT INTO room_student (room_id,student_id,created_at) VALUES (?,?,?)";
-    
-	entityManager.createNativeQuery(insetNative)
-    	.setParameter(1, findCodeId.getIdRoom())
-    	.setParameter(2, findStdId.getIdStudent())
-    	.setParameter(3, new Date()).executeUpdate();
+	@GetMapping("/insert/Ass_student_room")
+	public String test() {
+		String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
+		entityManager.createNativeQuery(insetNative)
+			.setParameter(1, 2)
+			.setParameter(2, 1)
+			.setParameter(3, 10)
+			.setParameter(4, "logo.png")
+			.setParameter(5, new Date())
+			.setParameter(6, 1)
+			.executeUpdate();
 		return "";
 	}
+
 	
-	
-	
-@GetMapping("/room/{idRoom}/{idAssignment}/submit")
-public String submit (@PathVariable("idRoom") String idRoom,@PathVariable("idAssignment") String idAssignment,Model m,HttpServletRequest request,HttpServletResponse response) {
+	@GetMapping("/room/{idRoom}/{idAssignment}/submit")
+	public String submit (@PathVariable("idRoom") String idRoom,@PathVariable("idAssignment") String idAssignment,Model m,HttpServletRequest request,HttpServletResponse response) {
 	String userId =" ";
 	Cookie [] cookie = request.getCookies();
 	if(cookie!=null) {
