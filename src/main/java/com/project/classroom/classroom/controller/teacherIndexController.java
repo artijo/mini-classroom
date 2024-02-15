@@ -41,6 +41,4 @@ public class teacherIndexController {
 	     
 	        return "redirect:/indexteach";
 	    }
-	
-    
 }

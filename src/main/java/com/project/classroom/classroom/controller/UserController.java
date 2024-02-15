@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,6 +107,35 @@ public class UserController {
 			teacher.setUpdatedAt(new Date());
 			teacherInterface.save(teacher);
 		}
+        return "redirect:/login";
+    }
+	
+	@GetMapping("/forgot")
+	public String forgot() {
+		return "forgot";
+	}
+	
+	
+	@PostMapping("/reset")
+	public String resetPost(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role, @RequestParam("passwordcf") String passwordcf, Model model) {
+		
+		if(!password.equals(passwordcf)) {
+			model.addAttribute("error", "Password and Confirm Password not match");
+		                return "forgot";
+		}
+        if (role.equals("student")) {
+            Student std = studentInterface.findByEmail(email);
+            if (std != null) {
+                std.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
+                studentInterface.save(std);
+            }
+        } else {
+            Teacher teacher = teacherInterface.findByEmail(email);
+            if (teacher != null) {
+                teacher.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
+                teacherInterface.save(teacher);
+            }
+        }
         return "redirect:/login";
     }
 }

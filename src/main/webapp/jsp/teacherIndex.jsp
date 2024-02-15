@@ -71,7 +71,7 @@
     </script>
 </head>
 <body>
-<nav>
+	<nav>
         <img src="image/logo.png" alt="โลโก้">
         <a href="" class="logout">ออกจากระบบ</a>
     </nav>
@@ -214,7 +214,7 @@
                 <input type="text" name="codeRoom" id="codeRoom" placeholder="กรุณากดสุ่มรหัส" readonly>
                 <input type="button" id="randomCode" value="สุ่มรหัส" onclick="generateRandomCode()">
                 <div class="btn">
-                    <input type="button" id="close-popup" value="ยกเลิก" onclick="window.location.href='./index.html'">
+                    <input type="button" id="close-popup" value="ยกเลิก" onclick="">
                     <input type="submit" id="submitButton" value="ยืนยัน" onclick="">
                 </div>
             </form>

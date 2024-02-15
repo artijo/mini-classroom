@@ -11,4 +11,13 @@ public interface StudentInterface extends CrudRepository<Student, Integer> {
 	String sqlByEmail = "SELECT * FROM student WHERE email = ?";
 	@Query(value = sqlByEmail, nativeQuery = true)
 	Student findByEmail(String email);
+	
+	
+	String sqlByStdId = "SELECT * FROM student WHERE student_id = ?";
+	@Query(value = sqlByStdId, nativeQuery = true)
+	Student findById(String student_id);
+		
+	
+	
+	
 }
