@@ -14,13 +14,31 @@ import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class teacherIndexController {
 	@Autowired
 	RoomInterface roomInterface;
 
 	@GetMapping("/indexteach")
-    public String index(Model model) {
+    public String index(Model model, jakarta.servlet.http.HttpServletRequest request) {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
         Iterable<Room> roomlist = roomInterface.findAll();
         model.addAttribute("roomList", roomlist); // แก้ไขตรงนี้
         return "teacherIndex";
@@ -30,7 +48,22 @@ public class teacherIndexController {
 	    public String addRoomTeacher(
 	            @RequestParam("codeRoom") String codeRoom,
 	            @RequestParam("nameRoom") String nameRoom,
-	            Model model) throws Exception {
+	            Model model, HttpServletRequest request) throws Exception {
+	    	String userId = "";
+			String role = "";
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie c : cookies) {
+					if (c.getName().equals("user")) {
+						userId = c.getValue();
+					} else if (c.getName().equals("role")) {
+						role = c.getValue();
+					}
+				}
+			}
+			if (userId.equals("") || role.equals("")) {
+				return "redirect:/login";
+			}
 
 	        Room newRoom = new Room();
 	        newRoom.setCodeRoom(codeRoom);

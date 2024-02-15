@@ -114,10 +114,23 @@ public class UserController {
 	public String forgot() {
 		return "forgot";
 	}
+	@PostMapping("/forgot")
+	public String forgotPost(@RequestParam("email") String email, @RequestParam("role") String role, Model model) {
+		Student std = studentInterface.findByEmail(email);
+		Teacher teacher = teacherInterface.findByEmail(email);
+		if (std != null || teacher != null) {
+			model.addAttribute("email", email);
+			model.addAttribute("role", role);
+			return "reset";
+		} else {
+			model.addAttribute("error", "Email not found");
+			return "forgot";
+		}
+	}
 	
 	
 	@PostMapping("/reset")
-	public String resetPost(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role, @RequestParam("passwordcf") String passwordcf, Model model) {
+	public String resetPost(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role, @RequestParam("confirmPassword") String passwordcf,@RequestParam("fname")String fname,@RequestParam("lname") String lname ,Model model) {
 		
 		if(!password.equals(passwordcf)) {
 			model.addAttribute("error", "Password and Confirm Password not match");
@@ -126,14 +139,24 @@ public class UserController {
         if (role.equals("student")) {
             Student std = studentInterface.findByEmail(email);
             if (std != null) {
-                std.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
-                studentInterface.save(std);
-            }
+				if (std.getFname().equals(fname) && std.getLname().equals(lname)) {
+					std.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
+					studentInterface.save(std);
+				}else {
+					model.addAttribute("error", "Name not match");
+                    return "reset";
+                }
+				}
         } else {
             Teacher teacher = teacherInterface.findByEmail(email);
             if (teacher != null) {
-                teacher.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
-                teacherInterface.save(teacher);
+                if(teacher.getFname().equals(fname) && teacher.getLname().equals(lname)){
+                    teacher.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
+                    teacherInterface.save(teacher);
+                    }else {
+                    	                        model.addAttribute("error", "Name not match");
+                        return "reset";
+                    }
             }
         }
         return "redirect:/login";

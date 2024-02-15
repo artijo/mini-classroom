@@ -18,6 +18,8 @@ import com.project.classroom.classroom.model.Room_StudentInterface;
 import com.project.classroom.classroom.model.StudentInterface;
 import com.project.classroom.classroom.model.TeacherInterface;
 
+import jakarta.servlet.http.Cookie;
+
 @Controller
 public class StudentController {
 
@@ -37,7 +39,22 @@ public class StudentController {
 	StudentInterface studentinterface;
 	
 	@GetMapping("/room/{roomId}/people")
-	public String people(@PathVariable("roomId") String roomId,Model model) {
+	public String people(@PathVariable("roomId") String roomId,Model model, jakarta.servlet.http.HttpServletRequest request) {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 		List<Room_Student> room_student = room_studentInterface.findByRoomId(roomId);
 		
 		Room room = roomInterface.findByIdRoom(Integer.parseInt(roomId)).get(0);

@@ -33,6 +33,9 @@ import com.project.classroom.classroom.model.Student;
 import com.project.classroom.classroom.model.StudentInterface;
 import com.project.classroom.classroom.model.TeacherInterface;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+
 
 
 @Controller
@@ -119,7 +122,22 @@ public class RoomController {
 	
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")
-	public String getRoom(@PathVariable("idRoom") Integer idRoom, Model model) {
+	public String getRoom(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 		Iterable<Room> room = roomInterface.findByIdRoom(idRoom);
 		Iterable<Assignment> assignment = assignmentInterface.getAssignmentOnRoom(idRoom);
 		model.addAttribute("room", room);
@@ -129,7 +147,22 @@ public class RoomController {
 	
 //	Route to Insert Page
 	@GetMapping("/insert/{idRoom}")
-	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model) {
+	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 		model.addAttribute("idRoom",idRoom);
 		return "teacherInsert";
 		
@@ -159,7 +192,22 @@ public class RoomController {
 	        @RequestParam("dueDate") String dueDate,
 	        @RequestParam("fullScore") Integer fullScore,
 	        @RequestParam("file") MultipartFile file,
-	        Model model) throws Exception {
+	        Model model, HttpServletRequest request) throws Exception {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 	    Room roomId = new Room();
 	    roomId.setIdRoom(idRoom);
 	    Assignment newAssignment = new Assignment();
@@ -179,7 +227,22 @@ public class RoomController {
 	}
 
 	@GetMapping("/assignment/{idAssignment}")
-	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model) {
+	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
 		Iterable<Student> student = studentinterface.findAll(); 

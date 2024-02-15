@@ -35,6 +35,9 @@ public class index {
 				}
 			}
 		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
 		if (role.equals("student")) {
 			Student student = studentInterface.findById(Integer.parseInt(userId)).get();
 			m.addAttribute("student", student);
