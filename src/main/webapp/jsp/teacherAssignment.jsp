@@ -70,29 +70,29 @@
 									</div>
 								</c:when>
 								<c:otherwise>
-									<c:forEach items="${student}" var="stuItem">
-										<c:forEach items="${allListAssignment}" var="assItem">
+									<c:forEach items="${allListAssignment}" var="assItem" >
+										<c:forEach items="${student}" var="stuItem">
 											<c:choose>
-												<c:when test="${stuItem.studentId == assItem.student.studentId }">
-													<div class="box">
-														<img src="">
-													
-													</div>
+												<c:when test="${stuItem.studentId.equals(assItem.student.studentId)}">
+													<div class="inline-flex box w-full border h-24 rounded-md">
+														<img src="http://localhost:8899/image/logo_crop.png" alt="logo" class="mr-5 w-24  rounded-md inline-flex object-cover">
+														<div class="flex w-full justify-between">
+															<span class="text-l font-bold">${stuItem.fname} ${stuItem.lname}</span>
+															<span class="text-l font-bold text-pink-500 border">ส่งแล้ว</span>
+														</div>
+													</div>	
 												</c:when>
 												<c:otherwise>
-													<div class="box">
-													
-													
-													</div>
+													<div class="inline-flex box w-full border h-24 rounded-md">
+														<img src="http://localhost:8899/image/logo_crop.png" alt="logo" class="mr-5 w-24 rounded-md inline-flex object-cover">
+														<div class="flex w-full justify-between">
+															<span class="text-l font-bold">${stuItem.fname} ${stuItem.lname}</span>
+															<span class="text-l font-bold text-pink-500 border" >ยังไม่ส่ง</span>
+														</div>
+													</div>	
 												</c:otherwise>
-											
-											
 											</c:choose>
-										
 										</c:forEach>
-										
-										
-									
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
