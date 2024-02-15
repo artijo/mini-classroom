@@ -16,7 +16,7 @@ public interface AssignmentInterface extends CrudRepository<Assignment, Integer>
 	List<Assignment> getListByPrimaryKey(Integer id_assignment);
 	
 	
-	String sqlByIdRoom = "SELECT * FROM assignment a WHERE id_room = ?";
+	String sqlByIdRoom = "SELECT * FROM assignment a WHERE id_room = ? ORDER BY created_at DESC";
 	@Query(value = sqlByIdRoom,nativeQuery = true)
 	List<Assignment> getAssignmentOnRoom(Integer idRoom);
 	

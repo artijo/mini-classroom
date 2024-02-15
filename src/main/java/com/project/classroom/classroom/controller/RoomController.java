@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.apache.catalina.connector.Response;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,8 @@ public class RoomController {
 	StudentInterface studentinterface;
 	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
             "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
+	
+	
 	public static String covertToThaiTime(Date date) {
 	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", new Locale("th", "TH"));
 	    String formattedDate = thaitime.format(date);
@@ -180,7 +183,7 @@ public class RoomController {
 	        return uniqueFileName;
 	    } catch (IOException e) {
 	        e.printStackTrace(); 
-	        return "Upload unsuccessful";
+	        return "";
 	    }
 	}
 
@@ -245,12 +248,13 @@ public class RoomController {
 		}
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
-		Iterable<Student> student = studentinterface.findAll(); 
+		Iterable<Student> student = studentinterface.findAll();
 		model.addAttribute("assignment",assignment);
 		model.addAttribute("allListAssignment",allListAssignment);
 		model.addAttribute("student",student);
 		return "teacherAssignment";
 	}
+	
 }
 
 
