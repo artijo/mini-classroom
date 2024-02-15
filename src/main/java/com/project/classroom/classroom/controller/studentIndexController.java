@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class studentIndexController {
+	
 	@Autowired
 	Room_StudentInterface roomStdInterface;
 	
@@ -62,7 +63,6 @@ public class studentIndexController {
 	            @RequestParam("idRoom") String code_id,
 	            HttpServletRequest request, HttpServletResponse response,
 	            Model model) throws Exception {
-<<<<<<< HEAD
 	    	String userId = "";
 			String role = "";
 			Cookie[] cookies = request.getCookies();
@@ -86,16 +86,6 @@ public class studentIndexController {
 	     
 	        return "";
 //	        eturn "redirect:/indexstudent";
-=======
-
-	        Room newRoom = new Room();
-	        newRoom.setCodeRoom(codeRoom);
-	        newRoom.setNameRoom(nameRoom);
-	        newRoom.setCreatedAt(new Date());
-	        newRoom.setThumbnail("image/default_poster.png");
-	        roomStdInterface.save(newRoom);	     
-	        return "redirect:/indexteach";
->>>>>>> 9d52a6dc27e8ec45a50c9bf579a3cefea3e358ab
 	    }
 	    
 }

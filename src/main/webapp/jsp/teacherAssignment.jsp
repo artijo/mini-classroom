@@ -78,7 +78,8 @@
 														<img src="http://localhost:8899/image/logo_crop.png" alt="logo" class="mr-5 w-24  rounded-md inline-flex object-cover">
 														<div class="flex w-full justify-between">
 															<span class="text-l font-bold">${stuItem.fname} ${stuItem.lname}</span>
-															<span class="text-l font-bold text-pink-500 border">ส่งแล้ว</span>
+															<span class="text-l font-bold text-pink-500">ส่งแล้ว</span>
+															<a href="http://localhost:8899/file/logo_crop.png"><span class="w-36 h-full file"></span></a>
 														</div>
 													</div>	
 												</c:when>
@@ -87,7 +88,8 @@
 														<img src="http://localhost:8899/image/logo_crop.png" alt="logo" class="mr-5 w-24 rounded-md inline-flex object-cover">
 														<div class="flex w-full justify-between">
 															<span class="text-l font-bold">${stuItem.fname} ${stuItem.lname}</span>
-															<span class="text-l font-bold text-pink-500 border" >ยังไม่ส่ง</span>
+															<span class="text-l font-bold text-pink-500" >ยังไม่ส่ง</span>
+															
 														</div>
 													</div>	
 												</c:otherwise>
