@@ -34,8 +34,11 @@ import com.project.classroom.classroom.model.Student;
 import com.project.classroom.classroom.model.StudentInterface;
 import com.project.classroom.classroom.model.TeacherInterface;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 
 
@@ -43,6 +46,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/roomTeacher")
 public class RoomController {
 
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	@Autowired
 	RoomInterface roomInterface;
 	@Autowired
@@ -148,6 +154,7 @@ public class RoomController {
 		return "teacherRoom";
 	}
 	
+
 //	Route to Insert Page
 	@GetMapping("/insert/{idRoom}")
 	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
@@ -229,8 +236,8 @@ public class RoomController {
 	    return "redirect:/roomTeacher/room/" + idRoom;
 	}
 
-	@GetMapping("/assignment/{idAssignment}")
-	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+	@GetMapping("/assignment/{idAssignment}/{roomId}")
+	public String getAssignment(@PathVariable("idAssignment") Integer idAss,@PathVariable("roomId") String roomId, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -248,13 +255,34 @@ public class RoomController {
 		}
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
-		Iterable<Student> student = studentinterface.findAll();
+		Iterable<Room_Student> student = room_studentInterface.findByRoomId(roomId);
 		model.addAttribute("assignment",assignment);
 		model.addAttribute("allListAssignment",allListAssignment);
 		model.addAttribute("student",student);
 		return "teacherAssignment";
 	}
 	
+	
+	
+	@Transactional
+	@PostMapping("/insertScore/{assId}/{roomId}")
+	public String updateScore(
+			@PathVariable("assId") Integer idAss,
+			@PathVariable("roomId") Integer idRoom,
+			@RequestParam("studentId") Integer idStu,
+			@RequestParam("score") Integer score,
+			Model model) 
+	{
+		String updateNative = "UPDATE Assignment_Room_Student a SET a.score = ? WHERE a.assignment_id = ? AND a.student_id = ?";
+    	entityManager.createNativeQuery(updateNative)
+	    	.setParameter(1, score)
+	    	.setParameter(2, idAss)
+	    	.setParameter(3, idStu).executeUpdate();
+		
+		
+		
+		return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
+	}
 }
 
 

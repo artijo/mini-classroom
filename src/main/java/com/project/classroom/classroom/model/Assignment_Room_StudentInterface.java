@@ -1,7 +1,6 @@
 package com.project.classroom.classroom.model;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,4 +9,5 @@ public interface Assignment_Room_StudentInterface extends CrudRepository<Assignm
 	String sqlByIdassignment = "SELECT * FROM assignment_room_student a WHERE assignment_id = ?";
 	@Query(value = sqlByIdassignment,nativeQuery = true)
 	List<Assignment_Room_Student> getRelationByIdAssKey(Integer idAss);
+
 }

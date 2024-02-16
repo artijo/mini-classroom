@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="indexstd.css">
     <link rel="stylesheet" href="navIndex.css">
-
  <script>
-
         function togglePopup() {
             var addRoomPopup = document.getElementById('addRoomPopup');
 

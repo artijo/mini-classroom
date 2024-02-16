@@ -9,6 +9,29 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+
+
+	<div class="overlay fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-black hidden z-20">
+		<div class="continer form absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-">
+	    	<form action="/roomTeacher/insertScore/${assignment[0].idAssignment}/${assignment[0].room.idRoom}" class=" w-96 max-w-xl border rounded-lg p-5 relative mx-auto bg-white"  method="post">
+		        <h1 class="text-l text-white bg-gray-600 p-2 w-fit absolute top-0 left-0 font-semibold rounded-tl-lg rounded-br-lg ">ปรับแต่งชั้นเรียน</h1>
+		        <div class="relative mt-10">
+		            <div>
+		                <div class="my-5 flex justify-center items-center">
+		                	<input type="number" name="score" required="required" class="w-12 h-12 border" min="0" max="${assignment[0].fullScore}">
+		                	<input type="number" name="studentId" id="stuId" hidden>
+		                	<h1 class="text-4xl ml-5">/ ${assignment[0].fullScore}</h1>
+		                </div>
+		                <div class="btn-group">
+			                <button type="submit" class="py-2 px-3 rounded-lg text-white bg-pink-300 hover:bg-pink-400 border text-xs">เพิ่มคะแนน</button>
+			                <button id="cancelbtn" type="button" class="py-2 px-3 rounded-lg text-black bg-gray-100 hover:bg-gray-200 border text-xs" onClick="cancel()">ยกเลิก</button>
+		                </div>
+		            </div>
+		        </div>
+		    </form>
+		</div>
+	</div>
+
 	<main>
 		<div class="container max-w-screen-xl mx-auto">
 			<div class="content flex gap-5 relative">
@@ -91,40 +114,23 @@
 								        	<c:forEach items="${allListAssignment}" var="assItem" >
 												<c:forEach items="${student}" var="stuItem">
 													<c:choose>
-														<c:when test="${stuItem.studentId.equals(assItem.student.studentId)}">
-															<tr class="text-center">
-																<td>
-																	<span class="text-l font-bold h-fit line-clamp-1">${stuItem.fname} ${stuItem.lname}</span>
+														<c:when test="${stuItem.student.idStudent.equals(assItem.student.idStudent)}">						
+															<tr class="text-center border-b">
+																<td class="py-5">
+																	<span class="text-l text-black font-bold h-fit line-clamp-1">${stuItem.student.fname} ${stuItem.student.lname}</span>
 																</td>
-																<td>
+																<td class="py-5" >
 																	<span class="text-l font-bold text-pink-500">ส่งแล้ว</span>
 																</td>
-																<td class="flex justify-center">
-																	<a class="w-10  line-clamp-1 text-bold underline h-fit file" href="http://localhost:8899/file/logo_crop.png" download>${assItem.filePath}</a>
+																<td class="py-5 flex justify-center item-center">
+																	<a class="w-10  line-clamp-1 text-bold underline h-fit file" href="http://localhost:8899/image/logo_crop.png">${assItem.filePath}</a>
 																</td>
-																<td>
-																																	
+																<td class="py-5 cursor-pointer hover:bg-pink-500 editIcon " title="เพิ่มคะแนนของ ${stuItem.student.studentId}" onclick="student(${stuItem.student.idStudent})">
+																		<span  class="cursor-pointer text-l font-bold text-black"> ${assItem.score} </span>
 																</td>
-															</tr>
-															
-															<div class="inline-flex box w-full border h-24 rounded-md">
-									
-																<div class="flex w-full justify-between">
-																	
-																	
-																	
-																</div>
-															</div>	
+															</tr>		
 														</c:when>
-														<c:otherwise>
-															<div class="inline-flex box w-full border h-24 rounded-md">
-																
-																<div class="flex w-full justify-between">
-																	<span class="text-l font-bold  w-36 h-fit line-clamp-1">${stuItem.fname} ${stuItem.lname}</span>
-																	<span class="text-l font-bold text-pink-500" >ยังไม่ส่ง</span>
-																</div>
-															</div>	
-														</c:otherwise>
+														<c:otherwise></c:otherwise>
 													</c:choose>
 												</c:forEach>
 											</c:forEach>
@@ -134,10 +140,8 @@
 								</c:otherwise>
 							</c:choose>
 						</div>
-					
 					</div>
-				</div>
-				
+				</div>		
 			</div>
 		</div>
 	
@@ -163,7 +167,18 @@
 		}
 		
 		
+		const formContainer = document.querySelector('.overlay');
+		const idValue = document.getElementById("stuId");
+		function student(id){
+			formContainer.classList.toggle('hidden');
+			idValue.value = id;
+		}
+		function cancel(){
+			formContainer.classList.toggle('hidden');
+			idValue.value = "";
+		}
 		
+	
 	</script>
 </body>
 </html>

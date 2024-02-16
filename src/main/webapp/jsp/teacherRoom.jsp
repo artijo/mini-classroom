@@ -64,7 +64,7 @@
 	                            </div>
 	                            <div class="info w-3/4">
 	                                <h5 class="line-clamp-1 font-medium text-sm">
-	                                    <a href="/roomTeacher/assignment/${ass.idAssignment}">${ass.title}</a>
+	                                    <a href="/roomTeacher/assignment/${ass.idAssignment}/${room[0].idRoom}">${ass.title}</a>
 	                                </h5>
 	                                <p class="text-xs text-gray">
 	                                	${RoomController.covertToThaiTime(ass.createdAt)}

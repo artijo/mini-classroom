@@ -15,6 +15,5 @@ public interface Room_StudentInterface extends CrudRepository<Room_Student, Inte
 	@Query(value = query2, nativeQuery = true)
 	Iterable<Room_Student> findByStudentId(int stdId);
 	
-	
 	   
 }
