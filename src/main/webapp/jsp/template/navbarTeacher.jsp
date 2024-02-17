@@ -6,7 +6,10 @@
 	<nav class="mb-10 bg-[#474F7A] w-full px-5">
 		<div class="topnav h-24 flex gap-10">
 			<div class="logo h-full">
-				<img src="http://localhost:8899/image/logo.png" class="h-full object-cover" alt="logo" >
+				<a href="/indexteacher">
+					<img src="http://localhost:8899/image/logo.png" class="h-full object-cover" alt="logo" >
+				</a>
+				
 			</div>
 			<ul class="h-full flex items-center gap-10">
 				<li class="text-xl w-fit font-semibold tracking-widest text-white relative">
