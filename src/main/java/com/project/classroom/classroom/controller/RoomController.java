@@ -62,6 +62,18 @@ public class RoomController {
 	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
             "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
 	
+	
+	private boolean checkTeacher(String teacher,Integer idRoom) {
+		if(roomInterface.qq(idRoom, teacher).size() != 0) {
+			System.out.println("ture");
+			return true;
+		}else {
+			System.out.println("false");
+			return false;
+		}
+	}
+	
+	
 	public static String covertToThaiTime(Date date) {
 	    SimpleDateFormat thaitime = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("th", "TH"));
 	    String formattedDate = thaitime.format(date);
@@ -145,6 +157,9 @@ public class RoomController {
 		if (userId.equals("") || role.equals("")) {
 			return "redirect:/login";
 		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
+		}
 		Iterable<Room> room = roomInterface.findByIdRoom(idRoom);
 		Iterable<Assignment> assignment = assignmentInterface.getAssignmentOnRoom(idRoom);
 		model.addAttribute("room", room);
@@ -171,9 +186,11 @@ public class RoomController {
 		if (userId.equals("") || role.equals("")) {
 			return "redirect:/login";
 		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
+		}
 		model.addAttribute("idRoom",idRoom);
 		return "teacherInsert";
-		
 	}
 	
 	public String upload(MultipartFile file) {
@@ -214,8 +231,11 @@ public class RoomController {
 				}
 			}
 		}
-		if (userId.equals("") || role.equals("")) {
+		if (userId.equals("") || role.equals("")) {	
 			return "redirect:/login";
+		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
 		}
 	    Room roomId = new Room();
 	    roomId.setIdRoom(idRoom);
@@ -236,7 +256,7 @@ public class RoomController {
 	}
 
 	@GetMapping("/assignment/{idAssignment}/{roomId}")
-	public String getAssignment(@PathVariable("idAssignment") Integer idAss,@PathVariable("roomId") String roomId, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+	public String getAssignment(@PathVariable("idAssignment") Integer idAss,@PathVariable("roomId") Integer roomId, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -252,9 +272,12 @@ public class RoomController {
 		if (userId.equals("") || role.equals("")) {
 			return "redirect:/login";
 		}
+		if(!checkTeacher(userId,roomId)) {
+			return "redirect:/indexteacher";
+		}
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
-		Iterable<Room_Student> student = room_studentInterface.findByRoomId(roomId);
+		Iterable<Room_Student> student = room_studentInterface.findByRoomId(roomId.toString());
 		model.addAttribute("assignment",assignment);
 		model.addAttribute("allListAssignment",allListAssignment);
 		model.addAttribute("student",student);
