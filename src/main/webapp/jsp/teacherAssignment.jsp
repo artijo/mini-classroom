@@ -7,9 +7,10 @@
 	<meta charset="ISO-8859-1">
 	<title>งานของนักศึกษา</title>
 	<script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
-
+	<jsp:include page="template/navbarTeacher.jsp"/>
 
 	<div class="overlay fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-black hidden z-20">
 		<div class="continer form absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-">
@@ -33,7 +34,7 @@
 	</div>
 
 	<main>
-		<div class="container max-w-screen-xl mx-auto">
+		<div class="container max-w-screen-xl mx-auto mb-20">
 			<div class="content flex gap-5 relative">
 				<h1 class="absolute text-2xl text-white bg-gray-600 py-2 px-3 w-fit text-start font-semibold rounded-tl-lg rounded-br-lg mb-5">คำสั่ง</h1>
 				<div class="rside h-fit w-2/4 border rounded-lg relative pt-5 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]">
@@ -43,7 +44,21 @@
 						 		<h1 class="text-3xl font-bold text-pink-300">${ass.title}</h1>
 						 		<div class="flex justify-between">
 						 			<p class="text-semibold text-slate-500 text-sm">${ass.room.teacher.fname} ${ass.room.teacher.lname }</p>
-						 			<p class="text-semibold text-slate-500 text-sm">กำหนด  ${RoomController.covertToThaiTime(ass.dueDate)}</p>
+						 			<p class="text-semibold text-slate-500 text-sm">
+						 				<c:choose>
+						 					<c:when test="${empty ass.dueDate }">
+						 						ไม่มีกำหนด
+						 					
+						 					</c:when>
+						 					<c:otherwise>
+						 							กำหนดส่งวันที่ ${RoomController.covertToThaiTime(ass.dueDate)} 
+						 					
+						 					</c:otherwise>
+						 				
+						 				</c:choose>
+						 		
+						 			
+						 			</p>
 						 		</div>
 						 	</div>
 						 	<div class="rbot p-9">

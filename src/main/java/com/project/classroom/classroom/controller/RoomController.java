@@ -62,15 +62,13 @@ public class RoomController {
 	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
             "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
 	
-	
 	public static String covertToThaiTime(Date date) {
-	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", new Locale("th", "TH"));
+	    SimpleDateFormat thaitime = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("th", "TH"));
 	    String formattedDate = thaitime.format(date);
 	    String[] arrOfStr = formattedDate.split(" ");
 	    String[] dateArr = arrOfStr[0].split("/");
 	    String thaiDateString;
 	    String thaiTimeString = arrOfStr[1];
-	    
 	    switch (dateArr[1]) {
 	        case "01": {
 	            thaiDateString = dateArr[0] + " มกราคม " + dateArr[2];
@@ -183,6 +181,7 @@ public class RoomController {
 	        String originalFilename = file.getOriginalFilename();
 	        String uniqueFileName = System.currentTimeMillis() + "&" + originalFilename;
 	        File directory = new File(uploadDirectory);
+
 	        if (!directory.exists()) {
 	            directory.mkdirs();
 	        }
