@@ -1,10 +1,10 @@
 package com.project.classroom.classroom.controller;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
-import com.project.classroom.classroom.model.Assignment_Room_Student;
 import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
@@ -79,6 +78,7 @@ public class StudentController {
 		System.out.println(room.getTeacher().getFname());
 		
         model.addAttribute("students", room_student);
+        model.addAttribute("role", role);
         return "people";
 	}
 	

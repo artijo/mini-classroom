@@ -19,6 +19,7 @@ public interface RoomInterface extends CrudRepository<Room, Integer> {
 	@Query(value = query3, nativeQuery = true)
 	List<Room> findByTeacherId(String id_teacher);
 	
-	
+	@Query(value = "SELECT * FROM room WHERE id_room = ?  AND id_teacher = ? ", nativeQuery = true)
+	List<Room> qq(Integer idRoom,String id_teacher);
 		
 }
