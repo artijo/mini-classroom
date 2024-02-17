@@ -10,6 +10,12 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+
+	<header>
+		<jsp:include page="template/navbarTeacher.jsp"/>
+	</header>
+
+
 	<div class="overlay fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-black hidden z-20">
 		<div class="continer form absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-">
 	    	<form action="#" class=" w-96 max-w-xl border rounded-lg p-5 relative mx-auto bg-white"  enctype="multipart/form-data" method="post">
@@ -21,8 +27,6 @@
 			                <button type="submit" class="py-2 px-3 rounded-lg text-white bg-pink-300 hover:bg-pink-400 border text-xs">อัพโหลดไฟล์</button>
 			                <button id="cancelbtn" type="button" class="py-2 px-3 rounded-lg text-black bg-gray-100 hover:bg-gray-200 border text-xs">ยกเลิก</button>
 		                </div>
-		                
-		            	
 		            </div>
 		        </div>
 		    </form>
@@ -30,11 +34,10 @@
 	</div>
 	
 	<main>
-		<div class="container mx-auto">
-	        <div class="content max-w-5xl mx-auto my-5">
+		<div class="container max-w-screen-xl mx-auto mb-20">
+	        <div class="content">
 	            <div class="Thumbnail relative mb-5 z-0 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
-	                <span id="editIcon" class="block absolute right-0 m-2 cursor-pointer bg-pink-300 rounded-lg w-10 h-10"><img class="rounded-lg" src="http://localhost:8899/icon/icon.svg"></span>
-	                <img src="http://localhost:8899/image/${room[0].thumbnail}" alt="Thumbnail" class="rounded-lg w-full h-full object-fill"> 
+	                <img src="http://localhost:8899/image/${room[0].thumbnail}" alt="Thumbnail" class="rounded-lg w-full h-full object-cover"> 
 	                <span class="absolute line-clamp-1 bottom-0 p-5 text-3xl font-medium antialiased text-white">
 	                    ${room[0].nameRoom}
 	                </span>
