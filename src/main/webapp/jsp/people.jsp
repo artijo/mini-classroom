@@ -18,6 +18,11 @@
 	<c:forEach var="std" items="${students}">
 		<c:out value="${std.student.fname}"></c:out>
 		<c:out value="${std.student.lname}"></c:out>
+		<c:if test="${role == 'teacher'}">
+		    <a href="/room/${room.idRoom }/people/${std.student.idStudent}/delete">Remove</a>
+		</c:if>
+			<br>
+			<br>
 	</c:forEach>
 </body>
 </html>
