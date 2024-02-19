@@ -11,9 +11,12 @@ public interface AssignmentInterface extends CrudRepository<Assignment, Integer>
 	
 	<S extends Assignment> S save(S entity);
 	
+	
+	
 	String sqlByPrimary = "SELECT * FROM assignment a WHERE id_assignment = ?";
 	@Query(value = sqlByPrimary,nativeQuery = true)
 	List<Assignment> getListByPrimaryKey(Integer id_assignment);
+
 	
 	
 	String sqlByIdRoom = "SELECT * FROM assignment a WHERE id_room = ? ORDER BY created_at DESC";

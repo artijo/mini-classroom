@@ -37,7 +37,13 @@
 		<div class="container max-w-screen-xl mx-auto mb-20">
 			<div class="content flex gap-5 relative">
 				<h1 class="absolute text-2xl text-white bg-gray-600 py-2 px-3 w-fit text-start font-semibold rounded-tl-lg rounded-br-lg mb-5">คำสั่ง</h1>
+				
 				<div class="rside h-fit w-2/4 border rounded-lg relative pt-5 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]">
+					<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="absolute top-0 right-0 m-2 flex bg-red-500 rounded-2xl hover:bg-red-400">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+						  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+						</svg>
+					</a>
 					<div class="rside-content">
 						<c:forEach items="${assignment}" var="ass">
 							<div class="rtop p-9 border-b-2">

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -304,6 +305,20 @@ public class RoomController {
 		
 		
 		return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
+	}
+	
+	@GetMapping("/delete/assignment/{idAss}/room/{idRoom}")
+	public String deleteAss(@PathVariable("idAss") Integer idAss,@PathVariable("idRoom") Integer idRoom) {
+		Iterable<Assignment> ass = assignmentInterface.getListByPrimaryKey(idAss);
+		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);
+		if(allListAssignment != null) {
+			assignment_Room_Student.deleteAll(allListAssignment);
+		}
+		for(Assignment assItem : ass) {
+			assignmentInterface.delete(assItem);
+			break;
+		}
+		return "redirect:/roomTeacher/room/"+idRoom;
 	}
 }
 

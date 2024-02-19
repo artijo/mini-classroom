@@ -57,6 +57,9 @@ public class teacherIndexController {
 		if (userId.equals("") || role.equals("")) {
 			return "redirect:/login";
 		}
+		if(role.equals("student")) {
+			return "redirect:/indexstudent";
+		}
         Iterable<Room> roomlist = roomInterface.findAll();
         model.addAttribute("roomList", roomlist); // แก้ไขตรงนี้
 		
@@ -88,6 +91,10 @@ public class teacherIndexController {
 			if (userId.equals("") || role.equals("")) {
 				return "redirect:/login";
 			}
+			if(role.equals("student")) {
+				return "redirect:/indexstudent";
+			}
+			
 
 			
 			Teacher findTeacherId = TeacherInterface.findById(userId);
