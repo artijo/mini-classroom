@@ -19,7 +19,7 @@
 				</div>
 				<div class="grid gap-1" id="std-box">
 					<label for="studentid" class="text-sm text-white mb-1">รหัสนักศึกษา<span class="text-orange-600">*</span></label>
-					<input type="text" id="studentid" name="studentid" class="bg-[#313338] w-full rounded-xl px-2 h-8 text-white" required>
+					<input type="text" id="studentid" name="studentid" class="bg-[#313338] w-full rounded-xl px-2 h-8 text-white" >
 				</div>
 				<div class="grid gap-1">
 					<label for="fname" class="text-sm text-white mb-1">ชื่อ<span class="text-orange-600">*</span></label> 

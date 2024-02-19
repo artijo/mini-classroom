@@ -52,12 +52,11 @@
         
         <div class="item">
             <div class="poster">
-                <a href="/roomStudent/room/${room.idRoom}">
+                <a href="/roomStudent/room/${room.room.idRoom}">
                     <img src="http://localhost:8899/image/${room.room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
                 </a>
             </div>
             <h4>${room.room.nameRoom}</h4>
-          
         </div>
     </c:forEach>
       <img src="image/addRoom.png" alt="เพิ่มห้องเรียน" class="iconAddRoom" onclick="togglePopup()">

@@ -55,11 +55,13 @@ public class studentIndexController {
 				}
 			}
 		}
-		Student findStdId = StdInterface.findById(userId);
-		int stdId = findStdId.getIdStudent();
-        Iterable<Room_Student> roomlist = roomStdInterface.findByStudentId(stdId);
-        model.addAttribute("roomList", roomlist);    
-        return "studentIndex";
+			Student findStdId = StdInterface.findById(userId);
+			int stdId = findStdId.getIdStudent();
+			System.out.println(stdId);
+	        Iterable<Room_Student> roomlist = roomStdInterface.findByStudentId(stdId);
+	        model.addAttribute("roomList", roomlist);    
+	        
+	        return "studentIndex";
     	}
 	
 		@Transactional
