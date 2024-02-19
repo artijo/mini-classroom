@@ -52,7 +52,7 @@
         
         <div class="item">
             <div class="poster">
-                <a href="/roomStudent/room/${room.room.idRoom}">
+                <a href="room/${room.room.idRoom}/submit">
                     <img src="http://localhost:8899/image/${room.room.thumbnail}" alt="รูปโปสเตอร์" id="posterImage">
                 </a>
             </div>

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
+import com.project.classroom.classroom.model.Assignment_Room_Student;
 import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
@@ -81,7 +82,7 @@ public class StudentController {
         model.addAttribute("role", role);
         return "people";
 	}
-	
+//	submit ass
 	@Transactional
 	@PostMapping("insert/Ass_student_room")
 	public String test(
@@ -121,15 +122,12 @@ System.out.println(teacherId.size());
 model.addAttribute("asscontent", asscontent);
 Student std_id = studentinterface.findByIdStudent(userId).get(0);
 model.addAttribute("std_id", std_id);
+List<Assignment_Room_Student> studentass = assignment_Room_Student.getRelationByIdAssKey(Integer.parseInt(idAssignment));
 	return "submitAss";
 }
-	
-	
-
-
-
-	@GetMapping("/room/{idRoom}/assignment/{idAssignment}/submit")
-	public String submit (@PathVariable("idRoom") String idRoom,@PathVariable("idAssignment") String idAssignment,Model m,HttpServletRequest request,HttpServletResponse response) {
+// student room
+	@GetMapping("/room/{idRoom}/submit")
+	public String submit (@PathVariable("idRoom") String idRoom,Model m,HttpServletRequest request,HttpServletResponse response) {
 	String userId =" ";
 	Cookie [] cookie = request.getCookies();
 	if(cookie!=null) {
@@ -144,7 +142,7 @@ model.addAttribute("std_id", std_id);
 	Room nameroom = roomInterface.findByIdRoom(Integer.parseInt(idRoom)).get(0);
 	m.addAttribute("rooms", nameroom);
 	
-	List<Assignment> id_ass = assignmentInterface.getAssignmentOnRoom(Integer.parseInt(idAssignment));
+	List<Assignment> id_ass = assignmentInterface.getAssignmentOnRoom(Integer.parseInt(idRoom));
 	m.addAttribute("idAssignments", id_ass);
 	
 	Student std_id = studentinterface.findByIdStudent(userId).get(0);
