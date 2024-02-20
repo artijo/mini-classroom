@@ -39,7 +39,7 @@
 				<h1 class="absolute text-2xl text-white bg-gray-600 py-2 px-3 w-fit text-start font-semibold rounded-tl-lg rounded-br-lg mb-5">คำสั่ง</h1>
 				
 				<div class="rside h-fit w-2/4 border rounded-lg relative pt-5 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]">
-					<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="absolute top-0 right-0 m-2 flex bg-red-500 rounded-2xl hover:bg-red-400">
+					<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="delete-button absolute top-0 right-0 m-2 flex bg-red-500 rounded-2xl hover:bg-red-400">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
 						  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 						</svg>
@@ -169,23 +169,27 @@
 	
 	</main>
 	<script type="text/javascript">
+	
 		const fileName = document.getElementById("fileName");
 		const fileType = document.getElementById("typeFile");
 		const fileImage = document.getElementById("filePhoto");
-		const splitList =  fileName.innerText.split(".");
-		const name = splitList[0].split("&");
-		fileName.innerText = name[1];
-		fileType.innerText = splitList[1];
-		switch(splitList[1]){
-			case "pdf":
-				fileImage.setAttribute("src","http://localhost:8899/icon/pdf.png")
-				break;
-			case "zip":
-				fileImage.setAttribute("src","http://localhost:8899/icon/zipfile.png")
-				break;
-			default:
-				fileImage.setAttribute("src","http://localhost:8899/icon/unknowfile.png")
+		if(fileName){
+			const splitList =  fileName.innerText.split(".");
+			const name = splitList[0].split("&");
+			fileName.innerText = name[1];
+			fileType.innerText = splitList[1];
+			switch(splitList[1]){
+				case "pdf":
+					fileImage.setAttribute("src","http://localhost:8899/icon/pdf.png")
+					break;
+				case "zip":
+					fileImage.setAttribute("src","http://localhost:8899/icon/zipfile.png")
+					break;
+				default:
+					fileImage.setAttribute("src","http://localhost:8899/icon/unknowfile.png")
+			}
 		}
+		
 		
 		
 		const formContainer = document.querySelector('.overlay');
@@ -198,6 +202,18 @@
 			formContainer.classList.toggle('hidden');
 			idValue.value = "";
 		}
+		
+		
+		const deleteBtn = document.getElementsByClassName('delete-button');
+		
+		var confirmThis = function (e) { 
+            if (!confirm('Are you sure?')) e.preventDefault(); 
+        };
+        
+        for (var i = 0, l = deleteBtn.length; i < l; i++) { 
+        	deleteBtn[i].addEventListener('click', confirmThis, false); 
+        } 
+		
 		
 	
 	</script>
