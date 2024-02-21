@@ -13,6 +13,7 @@ import com.project.classroom.classroom.model.TeacherInterface;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class index {
@@ -23,6 +24,12 @@ public class index {
 	
 	@GetMapping("/")
 	public String index(HttpServletRequest request, HttpServletResponse response, Model m) {
+		HttpSession session = request.getSession();
+		String useremail = (String) session.getAttribute("useremail");
+		if (useremail == null) {
+			return "redirect:/login";
+		}
+		
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
