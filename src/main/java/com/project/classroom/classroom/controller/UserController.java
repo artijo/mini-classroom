@@ -16,7 +16,9 @@ import com.project.classroom.classroom.model.TeacherInterface;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -32,7 +34,7 @@ public class UserController {
 		return "login";
 	}
 	@PostMapping("/login")
-	public String loginPost(HttpServletResponse res,@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role) {
+	public String loginPost(HttpServletResponse res, HttpServletRequest req,@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role) {
 		if (role.equals("student")) {
 			Student std = studentInterface.findByEmail(email);
 			if (std != null) {
@@ -44,6 +46,8 @@ public class UserController {
 					Cookie cookie2 = new Cookie("role", "student");
 					cookie2.setMaxAge(60 * 60 * 24 * 30);
 					res.addCookie(cookie2);
+					HttpSession session = req.getSession();
+					session.setAttribute("useremail", std.getEmail());
 					return "redirect:/";
 				}
 			}
@@ -57,6 +61,8 @@ public class UserController {
 					Cookie cookie2 = new Cookie("role", "teacher");
 					cookie2.setMaxAge(60 * 60 * 24 * 30);
 					res.addCookie(cookie2);
+					HttpSession session = req.getSession();
+					session.setAttribute("useremail", teacher.getEmail());
 					return "redirect:/";
 				}
 			}
@@ -65,13 +71,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/logout")
-	public String logout(HttpServletResponse res) {
+	public String logout(HttpServletResponse res, HttpServletRequest req) {
 		Cookie cookie = new Cookie("user", "");
 		cookie.setMaxAge(0);
 		res.addCookie(cookie);
 		Cookie cookie2 = new Cookie("role", "");
 		cookie2.setMaxAge(0);
 		res.addCookie(cookie2);
+		HttpSession session = req.getSession();
+		session.removeAttribute("useremail");
 		return "redirect:/login";
 	}
 	
