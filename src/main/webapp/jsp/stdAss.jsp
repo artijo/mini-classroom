@@ -30,6 +30,21 @@
                 </div>
                 <c:forEach items="${idAssignments }" var="content" >
                 <div class="shadow-sm shadow-gray-500 w-3/4 relative p-[5px] rounded-lg">
+                <p class="text-semibold text-white text-sm bg-[#334155] w-fit absolute right-[0px] p-[5px]  rounded-lg top-[0px] rounded-b-none rounded-s-none">
+						 				<c:choose>
+						 					<c:when test="${empty ass.dueDate }">
+						 						ไม่มีกำหนด
+						 					
+						 					</c:when>
+						 					<c:otherwise>
+						 							กำหนดส่งวันที่ ${RoomController.covertToThaiTime(ass.dueDate)} 
+						 					
+						 					</c:otherwise>
+						 				
+						 				</c:choose>
+						 		
+						 			
+						 			</p>
                 <h3 class="font-bold">หัวข้อ : ${content.title}</h3>
                 <p class="text-base font-light">รายละเอียด : ${content.detail}</p> 
                  <a href="/room/${room}/assignment/${content.idAssignment}/student/${std_id.idStudent}/insert/Ass_student_room" class="bg-pink-300 p-[4px] rounded-lg text-white block w-fit absolute right-[5px]

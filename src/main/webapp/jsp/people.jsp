@@ -6,14 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>People</title>
+ <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>People</h1>
-    <h3>Teachers</h3>
+<body class="ml-[10px] mt-[10px]">
+    <h2>ผู้สอน</h2>
     <hr>
-        <c:out value="${room.teacher.fname}"></c:out>
+   	<div class="bg-[#f3f4f6] w-[500px] p-[10px] mt-[10px]" >
+   		<c:out value="${room.teacher.fname}"></c:out>
         <c:out value="${room.teacher.lname}"></c:out>
-    <h3>Students</h3>
+   	</div>
+        
+   <h2>นักศึกษา</h2>
     <hr>
 	<c:forEach var="std" items="${students}">
 		<c:out value="${std.student.fname}"></c:out>
