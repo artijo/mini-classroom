@@ -20,34 +20,27 @@
         <!-- Right side -->
         <div class="shadow dark:bg-gray-800 dark:border-gray-700w p-6 w-2/4 relative h-2/4">
             <h1 class="text-lg">งานของคุณ</h1>
-            <form action="/insert/Ass_student_room" method="post" >
-                <c:if test="${empty studentass[0]. filePath}">
-                 <div class="mx-auto w-fit h-1/2" ><input type="file" name="file_ass" class="mb-2 w-full text-black text-sm bg-gray-100 cursor-pointer border-0 py-2 px-4 mr-4 
+            <form action="/insert/Ass_student_room" method="post"  enctype="multipart/form-data">
+              <c:choose>
+              <c:when test="${empty studentass[0].filePath}">
+              <div class="mx-auto w-fit h-1/2" ><input type="file" name="file_ass" class="mb-2 w-full text-black text-sm bg-gray-100 cursor-pointer border-0 py-2 px-4 mr-4 
                     bg-gray-800 hover:bg-gray-700 text-white rounded"></div>
                     <input type="hidden" value= '<c:out value="${std_id.idStudent }"></c:out> '   name="stdid" >
                       <input type="hidden" value= '<c:out value="${roomcontent[0].idRoom}"></c:out> '    name="rooms">
                         <input type="hidden" value= '<c:out value="${asscontent[0].idAssignment}"></c:out> '   name="assignment" >
                         <input type="submit" value="ส่งงาน" class="bg-pink-300 rounded-lg p-[5px] text-white absolute right-5 top-[150px] hover:bg-pink-400">
-                </c:if>
-                <div class="  p-[20px] mx-auto] bg-emerald-400  shadow rounded-lg text-white text-center" id="submit" > คุณส่งงานแล้ว  </div>
-                <a href="" class="bg-red-500 rounded-lg p-[5px] text-white absolute right-[100px] top-[150px] hover:bg-red-600" onclick="deletefunction(event)">ยกเลิก</a>
+              </c:when>
+              <c:otherwise>
+                              <div class="  p-[20px] mx-auto] bg-emerald-400  shadow rounded-lg text-white text-center" id="submit" > คุณส่งงานแล้ว  </div>
+                                 <a href="/del/assignment_student_ass/${ std_id.idStudent }" class="bg-red-500 rounded-lg p-[5px] text-white absolute right-[100px] top-[150px] hover:bg-red-600" onclick="deletefunction(event)">ยกเลิก</a>
+              </c:otherwise>
+              </c:choose>
             </form>
            
         </div>
     </div>
     
-    <script type="text/javascript">
-    function deletefunction(event) {
-    	event.preventDefault();
-    	if(confirm("คุณต้องการยกเลิกงานที่ส่งหรือไม่")==true){
-    		document.getElementById("submit").innerHTML = ""
-    		document.getElementById("submit").innerHTML = "คุณยกเลิกการส่งแล้ว"
-    	}else{
-    		document.getElementById("submit").innerHTML = "คุณส่งงานแล้ว"
-    	}
-    }
-    
-    </script>
+ 
     
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.project.classroom.classroom.controller;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
+import com.project.classroom.classroom.model.AssignmentRoomStudentKey;
 import com.project.classroom.classroom.model.Assignment_Room_Student;
 import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
 import com.project.classroom.classroom.model.Room;
@@ -25,6 +27,7 @@ import com.project.classroom.classroom.model.Room_StudentInterface;
 import com.project.classroom.classroom.model.Student;
 import com.project.classroom.classroom.model.StudentInterface;
 import com.project.classroom.classroom.model.TeacherInterface;
+import com.project.classroom.classroom.uploadservice.UploadService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -86,20 +89,30 @@ public class StudentController {
 	@Transactional
 	@PostMapping("insert/Ass_student_room")
 	public String test(
-			@RequestParam("file_ass") String file_ass,
+			@RequestParam("file_ass") MultipartFile file_ass,
 			@RequestParam("stdid") String stdid,
 			@RequestParam("rooms") Integer rooms,
 			@RequestParam("assignment") Integer assignment,Model m
 			) {
-		String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
-		entityManager.createNativeQuery(insetNative)
-			.setParameter(1, stdid)
-			.setParameter(2, rooms)
-			.setParameter(3, 0)
-			.setParameter(4, file_ass)
-			.setParameter(5, new Date())
-			.setParameter(6, assignment)
-			.executeUpdate();
+		Assignment assID = assignmentInterface.getListByPrimaryKey(assignment).get(0);
+		assID.getIdAssignment();
+		Student studentID = studentinterface.getinfoByID(stdid);
+		studentID.getIdStudent();
+		Room roomID = roomInterface.findByIdRoom(rooms).get(0);
+		roomID.getIdRoom();
+		  UploadService service = new UploadService();
+		if(file_ass!=null||!file_ass.isEmpty()) {
+			String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
+			entityManager.createNativeQuery(insetNative)
+				.setParameter(1, stdid)
+				.setParameter(2, rooms)
+				.setParameter(3, 0)
+				.setParameter(4, service.upload(file_ass))
+				.setParameter(5, new Date())
+				.setParameter(6, assignment)
+				.executeUpdate();
+		}
+		
 		return "redirect:/room/"+rooms+"/assignment/"+assignment+"/student/"+stdid+"/insert/Ass_student_room";
 	}
 @GetMapping("room/{idRoom}/assignment/{idAssignment}/student/{idStudent}/insert/Ass_student_room")
@@ -116,16 +129,18 @@ public String show(Model model,@PathVariable("idAssignment") String idAssignment
 	}
   List<Room > teacherId =roomInterface.findByIdRoom(Integer.parseInt(idRoom));
 model.addAttribute("roomcontent", teacherId);
-System.out.println(teacherId.size());
+
  List<Assignment>  asscontent = assignmentInterface.getAssignmentOnRoom(Integer.parseInt(idRoom));
- System.out.println(asscontent.size());
 model.addAttribute("asscontent", asscontent);
+
 Student std_id = studentinterface.findByIdStudent(userId).get(0);
 model.addAttribute("std_id", std_id);
+
 List<Assignment_Room_Student> studentass = assignment_Room_Student.getRelationByIdAssKey(Integer.parseInt(idAssignment));
+model.addAttribute("studentass", studentass);
 	return "submitAss";
 }
-// student room
+
 	@GetMapping("/room/{idRoom}/submit")
 	public String submit (@PathVariable("idRoom") String idRoom,Model m,HttpServletRequest request,HttpServletResponse response) {
 	String userId =" ";
@@ -151,6 +166,20 @@ List<Assignment_Room_Student> studentass = assignment_Room_Student.getRelationBy
 	return "stdAss";
 	
 }
+// delete Ass for one student
+	@GetMapping("/del/assignment_student_ass/{idStudent}")
+	public String deleteFileAssignment (@PathVariable("idStudent")  Integer idStudent) {
+		Assignment_Room_Student assStudentID = assignment_Room_Student.getRelationByIdStudKey(idStudent).get(0);
+		assStudentID.getStudent();
+		ArrayList<Room_Student> info = new ArrayList<Room_Student>();
+		Iterable<Room_Student> roomstudent = room_studentInterface.findByStudentId(idStudent);
+		
+		
+		if(!assStudentID.getFilePath().isEmpty()) {
+			assignment_Room_Student.delete(assStudentID);
+		}
+		return "redirect:/room/";
+	}
 }
 
 
