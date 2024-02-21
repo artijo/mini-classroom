@@ -9,16 +9,16 @@
  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
- <div class="flex justify-center  gap-[20px] h-screen mx-[10px] my-[10px]">
+ <div class="flex justify-center  gap-[20px] h-auto mx-[10px] my-[10px]">
         <!-- left side -->
-        <div class="shadow dark:bg-gray-800 dark:border-gray-700w border-indigo-600 p-6 w-2/4 h-2/4">
+        <div class="shadow dark:bg-gray-800 dark:border-gray-700w border-indigo-600 p-6 w-2/4 h-[500px] rounded-lg">
             <h1 class="text-lg">${asscontent[0].title}</h1>
             <p>${roomcontent[0].teacher.fname} ${roomcontent[0].teacher.lname} : ${asscontent[0].createdAt }</p>
             <div class="flex gap-[75%] my-[20px]"><p>100 คะแนน</p> <p>  due: ${asscontent[0].dueDate}</p></div>
             <hr>
         </div>
         <!-- Right side -->
-        <div class="shadow dark:bg-gray-800 dark:border-gray-700w p-6 w-2/4 relative h-2/4">
+        <div class="shadow dark:bg-gray-800 dark:border-gray-700w p-6 w-2/4 relative h-[500px] rounded-lg">
             <h1 class="text-lg">งานของคุณ</h1>
             <form action="/insert/Ass_student_room" method="post"  enctype="multipart/form-data">
               <c:choose>
@@ -38,8 +38,9 @@
             </form>
            
         </div>
+        
     </div>
-    
+    <a href="/room/${roomcontent[0].idRoom}/submit" class="bg-green-400 rounded-lg p-[5px] text-white hover:bg-green-600 ml-[10px]">ย้อนกลับ</a>
  
     
 </body>
