@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.project.classroom.classroom.middleware.Auth;
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
 import com.project.classroom.classroom.model.Assignment_Room_Student;
@@ -52,6 +54,9 @@ public class RoomController {
 	
 	@Autowired
 	StudentInterface studentinterface;
+	
+	@Autowired
+	private Auth auth;
 	
 	private boolean checkTeacher(String teacher,Integer idRoom) {
 		if(roomInterface.qq(idRoom, teacher).size() != 0) {
@@ -132,6 +137,10 @@ public class RoomController {
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")
 	public String getRoom(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -161,6 +170,10 @@ public class RoomController {
 //	Route to Insert Page
 	@GetMapping("/insert/{idRoom}")
 	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -194,6 +207,10 @@ public class RoomController {
 	        @RequestParam("fullScore") Integer fullScore,
 	        @RequestParam("file") MultipartFile file,
 	        Model model, HttpServletRequest request) throws Exception {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -239,6 +256,10 @@ public class RoomController {
 
 	@GetMapping("/assignment/{idAssignment}/{roomId}")
 	public String getAssignment(@PathVariable("idAssignment") Integer idAss,@PathVariable("roomId") Integer roomId, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -275,8 +296,12 @@ public class RoomController {
 			@PathVariable("roomId") Integer idRoom,
 			@RequestParam("studentId") Integer idStu,
 			@RequestParam("score") Integer score,
-			Model model) 
+			Model model, HttpServletRequest request) 
 	{
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String updateNative = "UPDATE Assignment_Room_Student a SET a.score = ? WHERE a.assignment_id = ? AND a.student_id = ?";
     	entityManager.createNativeQuery(updateNative)
 	    	.setParameter(1, score)
