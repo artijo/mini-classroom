@@ -51,15 +51,17 @@
 	                    </div>
 	                </div>
 	                <!-- Right -->
+	                 <a href="/roomTeacher/insert/${room[0].idRoom}">
 	                <div class="right-side w-3/4 grid grid-cols-1 gap-5">
-	                	<div class="addgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full border py-3 px-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
+	                	<div class="addgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full h-[90px] border py-3 px-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
 		                     <div class="profile w-12 h-12">
 		                         <img src="http://localhost:8899/image/logo_crop.png" alt="Cute anime" class="w-full h-full object-cover rounded-full">
 		                     </div>
-		                     <a href="/roomTeacher/insert/${room[0].idRoom}">
+		                    
 		                        <span class="text-sm font-thin text-gray-400">เพิ่มงานในชั้นเรียน</span>
-		                     </a>
+		                    
 	                    </div>
+	                     </a>
 	                	<c:forEach items="${assignment}" var="ass">
 	                		<div class="assgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full border py-3 px-10 rounded-lg">
 	                            <div class="icon-ass w-12 h-12">

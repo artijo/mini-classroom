@@ -144,6 +144,8 @@
 																	<span class="text-l font-bold text-pink-500">ส่งแล้ว</span>
 																</td>
 																<td class="py-5 flex justify-center item-center">
+																	<img alt="" src="./image/icon_edit.png" onclick="editPostPopup()">
+															
 																	<a class="w-10  line-clamp-1 text-bold underline h-fit file" href="http://localhost:8899/image/logo_crop.png">${assItem.filePath}</a>
 																</td>
 																<td class="py-5 cursor-pointer hover:bg-pink-500 editIcon " title="เพิ่มคะแนนของ ${stuItem.student.studentId}" onclick="student(${stuItem.student.idStudent})">
@@ -165,7 +167,36 @@
 				</div>		
 			</div>
 		</div>
-	
+	 <div class="popup-editpost" id="editPost" style="display: none;">
+        <div class="popup-editpost-content">
+            <h3>แก้ไขงานที่มอบหมาย</h3>
+            <div class="boxpost">
+                <form method="post" action="{{ route('editPost', ['id' => $room->id, 'selectedId' => $selectedAss->id]) }}" enctype="multipart/form-data">
+                   
+                    <p class="name">ชื่อ</p>
+                    <input type="text" id="nameja" name="nameAss" value="{{ $selectedAss->nameAss }}" required> 
+                    <p class="detail" >รายละเอียด</p>
+                    <textarea id="detailja" rows="5" cols="20" name="detailAss">{{ $selectedAss->detailAss }}</textarea>
+                    
+                    <div class="scoreanddeadline">
+                        <p class="editscoreass">คะแนนของงานที่มอบหมาย</p>
+                        <p class="editdeadline">ครบกำหนด</p>
+                    </div>
+                    
+                    <div class="inputscoreanddeadline">
+                        <input type="number" min="0" max="100" step="1" id="editscoreass" name="scoreass" value="{{ $selectedAss->fullScoreAss }}">
+                        <input type="datetime-local" id="editdeadlinetime" name="deadline" value="{{ $selectedAss->deadline }}">
+                    </div>
+                    
+                    <div class="btn">
+                        <input type="button" id="close-popup" value="ยกเลิก" onclick="cancelAndReturn()">
+                        <input type="submit" id="submitButton" value="ยืนยัน">
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
 	
 	</main>
 	<script type="text/javascript">
@@ -215,7 +246,19 @@
         } 
 		
 		
-	
+        function editPostPopup() {
+            var editPostPopup = document.getElementById('editPost');
+
+            if (editPostPopup.style.display === 'none' || editPostPopup.style.display === '') {
+                editPostPopup.style.display = 'block';
+            } else {
+                editPostPopup.style.display = 'none';
+            }
+        }
+        function cancelAndReturn() {
+            togglePopup();
+            window.location.href = '/indexteacher'; 
+        }
 	</script>
 </body>
 </html>

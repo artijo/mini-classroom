@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="./login.css">
 </head>
 <body>
    <!--  <h1>เข้าสู่ระบบ</h1>

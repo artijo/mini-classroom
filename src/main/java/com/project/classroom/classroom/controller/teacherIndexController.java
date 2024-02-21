@@ -149,6 +149,8 @@ public class teacherIndexController {
 			
 			return "redirect:/room/"+roomId+"/people";
         }
-			 	
+	    
+	    
+
 	    
 }
