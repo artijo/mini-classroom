@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.classroom.classroom.middleware.Auth;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
 import com.project.classroom.classroom.model.RoomStudentKey;
@@ -24,6 +25,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -41,8 +43,15 @@ public class studentIndexController {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	@Autowired
+	private Auth auth;
+	
 	@GetMapping("/indexstudent")
     public String indexstd(HttpServletRequest request, HttpServletResponse response,Model model) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -70,6 +79,10 @@ public class studentIndexController {
 	            @RequestParam("idRoom") String code_id,
 	            HttpServletRequest request, HttpServletResponse response,
 	            Model model) throws Exception {
+			String authcheck = auth.isLoginMatch(request);
+			if (authcheck.equals("Auth") == false) {
+				return "redirect:/login";
+			}
 	    	String userId = "";
 			String role = "";
 			Cookie[] cookies = request.getCookies();
