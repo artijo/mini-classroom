@@ -39,13 +39,15 @@ public class index {
 			return "redirect:/login";
 		}
 		if (role.equals("student")) {
-			Student student = studentInterface.findById(Integer.parseInt(userId)).get();
-			m.addAttribute("student", student);
+//			Student student = studentInterface.findById(Integer.parseInt(userId)).get();
+//			m.addAttribute("student", student);
+			return "redirect:/indexstudent";
 		} else if (role.equals("teacher")) {
-			Teacher teacher = teacherInterface.findById(Integer.parseInt(userId)).get();
-			m.addAttribute("teacher", teacher);
+//			Teacher teacher = teacherInterface.findById(Integer.parseInt(userId)).get();
+//			m.addAttribute("teacher", teacher);
+			return "redirect:/indexteacher";
 		}
-		return "index";
+		return "redirect:/login";
 	}
 
 }
