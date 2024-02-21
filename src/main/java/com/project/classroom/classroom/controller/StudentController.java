@@ -104,12 +104,7 @@ public class StudentController {
 			@RequestParam("assignment") Integer assignment,Model m,
 			HttpServletRequest request
 			) {
-		Assignment assID = assignmentInterface.getListByPrimaryKey(assignment).get(0);
-		assID.getIdAssignment();
-		Student studentID = studentinterface.getinfoByID(stdid);
-		studentID.getIdStudent();
-		Room roomID = roomInterface.findByIdRoom(rooms).get(0);
-		roomID.getIdRoom();
+		
 		  UploadService service = new UploadService();
 		if(file_ass!=null||!file_ass.isEmpty()) {
 			String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
@@ -122,20 +117,6 @@ public class StudentController {
 				.setParameter(6, assignment)
 				.executeUpdate();
 		}
-		
-		String authcheck = auth.isLoginMatch(request);
-		if (authcheck.equals("Auth") == false) {
-			return "redirect:/login";
-		}
-		String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
-		entityManager.createNativeQuery(insetNative)
-			.setParameter(1, stdid)
-			.setParameter(2, rooms)
-			.setParameter(3, 0)
-			.setParameter(4, file_ass)
-			.setParameter(5, new Date())
-			.setParameter(6, assignment)
-			.executeUpdate();
 		return "redirect:/room/"+rooms+"/assignment/"+assignment+"/student/"+stdid+"/insert/Ass_student_room";
 	}
 @GetMapping("room/{idRoom}/assignment/{idAssignment}/student/{idStudent}/insert/Ass_student_room")
@@ -198,18 +179,16 @@ model.addAttribute("studentass", studentass);
 	
 }
 // delete Ass for one student
-	@GetMapping("/del/assignment_student_ass/{idStudent}")
-	public String deleteFileAssignment (@PathVariable("idStudent")  Integer idStudent) {
+	@GetMapping("/del/assignment_student_ass/{idStudent}/room/{idRoom}/assignment/{idAssignment}")
+	public String deleteFileAssignment (@PathVariable("idStudent")  Integer idStudent,@PathVariable("idroom") Integer idroom,@PathVariable("assID") Integer assID) {
 		Assignment_Room_Student assStudentID = assignment_Room_Student.getRelationByIdStudKey(idStudent).get(0);
 		assStudentID.getStudent();
-		ArrayList<Room_Student> info = new ArrayList<Room_Student>();
-		Iterable<Room_Student> roomstudent = room_studentInterface.findByStudentId(idStudent);
-		
+	
 		
 		if(!assStudentID.getFilePath().isEmpty()) {
 			assignment_Room_Student.delete(assStudentID);
 		}
-		return "redirect:/room/";
+		return "redirect:/room/"+idroom+"/assignment/"+assID+"/student/"+idStudent+"/insert/Ass_student_room";
 	}
 }
 

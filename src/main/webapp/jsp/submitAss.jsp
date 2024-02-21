@@ -32,7 +32,7 @@
               </c:when>
               <c:otherwise>
                               <div class="  p-[20px] mx-auto] bg-emerald-400  shadow rounded-lg text-white text-center" id="submit" > คุณส่งงานแล้ว  </div>
-                                 <a href="/del/assignment_student_ass/${ std_id.idStudent }" class="bg-red-500 rounded-lg p-[5px] text-white absolute right-[100px] top-[150px] hover:bg-red-600" onclick="deletefunction(event)">ยกเลิก</a>
+                                 <a href="/del/assignment_student_ass/${ std_id.idStudent }/room/${roomcontent[0].idRoom}/assignment/${asscontent[0].idAssignment}" class="bg-red-500 rounded-lg p-[5px] text-white absolute right-[100px] top-[150px] hover:bg-red-600" onclick="deletefunction(event)">ยกเลิก</a>
               </c:otherwise>
               </c:choose>
             </form>
