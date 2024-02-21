@@ -180,8 +180,8 @@ model.addAttribute("studentass", studentass);
 }
 // delete Ass for one student
 	@GetMapping("/del/assignment_student_ass/{idStudent}/room/{idRoom}/assignment/{idAssignment}")
-	public String deleteFileAssignment (@PathVariable("idStudent")  Integer idStudent,@PathVariable("idroom") Integer idroom,@PathVariable("assID") Integer assID) {
-		Assignment_Room_Student assStudentID = assignment_Room_Student.getRelationByIdStudKey(idStudent).get(0);
+	public String deleteFileAssignment (@PathVariable("idStudent")  String idStudent,@PathVariable("idRoom") String idroom,@PathVariable("idAssignment") String assID) {
+		Assignment_Room_Student assStudentID = assignment_Room_Student.getRelationByIdStudKey(Integer.parseInt(idStudent)).get(0);
 		assStudentID.getStudent();
 	
 		
