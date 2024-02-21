@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.project.classroom.classroom.model.Assignment;
+import com.project.classroom.classroom.model.Assignment_Room_Student;
+import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
 import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
 import com.project.classroom.classroom.model.Room_Student;
@@ -39,6 +41,9 @@ public class teacherIndexController {
 	
 	@Autowired
 	Room_StudentInterface room_studentInterface;
+	
+	@Autowired
+	Assignment_Room_StudentInterface assignment_room_studentInterface;
 
 	@GetMapping("/indexteacher")
     public String index(HttpServletRequest request, HttpServletResponse response,Model model) {
@@ -134,6 +139,13 @@ public class teacherIndexController {
 			
 			Room_Student dl = room_studentInterface.findByRoomIdAndStudentId(roomId, studentId);
 			room_studentInterface.delete(dl);
+			Iterable<Assignment_Room_Student> ars = assignment_room_studentInterface.getRelationByIdStudKey(studentId);
+			if (ars != null) {
+//				for (Assignment_Room_Student ar : ars) {
+//					assignment_room_studentInterface.delete(ar);
+//				}
+				assignment_room_studentInterface.deleteAll(ars);
+			}
 			
 			return "redirect:/room/"+roomId+"/people";
         }
