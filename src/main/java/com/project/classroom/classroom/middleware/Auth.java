@@ -43,7 +43,7 @@ public class Auth {
 		
 		if (role.equals("student")) {
 			Student std = stdInterface.findById(userId);
-			if (std == null || std.getEmail() != useremail) {
+			if (std == null || std.getEmail().equals(useremail) == false) {
 				return "Unauthorized";
 			}
 		} else if (role.equals("teacher")) {
@@ -53,7 +53,6 @@ public class Auth {
 				return "Unauthorized";
 			}
 		}
-		System.out.println("Heyy");
 		return "Auth";
 	}
 
