@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.classroom.classroom.middleware.Auth;
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
 import com.project.classroom.classroom.model.Assignment_Room_Student;
@@ -28,6 +29,7 @@ import com.project.classroom.classroom.model.TeacherInterface;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -53,9 +55,16 @@ public class StudentController {
 	@PersistenceContext
 	EntityManager  entityManager;
 	
+	@Autowired
+	private Auth auth;
+	
 //	get all people
 	@GetMapping("/room/{roomId}/people")
 	public String people(@PathVariable("roomId") String roomId,Model model, jakarta.servlet.http.HttpServletRequest request) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -89,8 +98,13 @@ public class StudentController {
 			@RequestParam("file_ass") String file_ass,
 			@RequestParam("stdid") String stdid,
 			@RequestParam("rooms") Integer rooms,
-			@RequestParam("assignment") Integer assignment,Model m
+			@RequestParam("assignment") Integer assignment,Model m,
+			HttpServletRequest request
 			) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String insetNative = "INSERT INTO assignment_room_student (student_id,room_id,score,file_path,created_at,assignment_id) VALUES (?,?,?,?,?,?)";
 		entityManager.createNativeQuery(insetNative)
 			.setParameter(1, stdid)
@@ -105,6 +119,10 @@ public class StudentController {
 @GetMapping("room/{idRoom}/assignment/{idAssignment}/student/{idStudent}/insert/Ass_student_room")
 public String show(Model model,@PathVariable("idAssignment") String idAssignment,@PathVariable("idRoom") String idRoom,
 		@PathVariable("idStudent") String stdid,HttpServletRequest request) {
+	String authcheck = auth.isLoginMatch(request);
+	if (authcheck.equals("Auth") == false) {
+		return "redirect:/login";
+	}
 	String userId =" ";
 	Cookie [] cookie = request.getCookies();
 	if(cookie!=null) {
@@ -128,6 +146,10 @@ List<Assignment_Room_Student> studentass = assignment_Room_Student.getRelationBy
 // student room
 	@GetMapping("/room/{idRoom}/submit")
 	public String submit (@PathVariable("idRoom") String idRoom,Model m,HttpServletRequest request,HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 	String userId =" ";
 	Cookie [] cookie = request.getCookies();
 	if(cookie!=null) {
