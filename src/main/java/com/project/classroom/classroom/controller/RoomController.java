@@ -324,18 +324,51 @@ public class RoomController {
 		}
 		return "redirect:/roomTeacher/room/"+idRoom;
 	}
-//	
-//	@PostMapping("/edit/assignment/{idAss}/room/{idRoom}")
-//	public String editAssignment(
-//	        @PathVariable("idAss") Integer idAss,
-//	        @PathVariable("idRoom") Integer idRoom,
-//	        @ModelAttribute("assignment") Assignment updatedAssignment
-//	) {
-//	   
-//
-//	    return "redirect:/roomTeacher/room/" + idRoom;
-//	}
 	
+	@GetMapping("/editAss/{idAssignment}")
+		public String editAss(@PathVariable("idAssignment") Integer idAss,
+				Model model, 
+				jakarta.servlet.http.HttpServletRequest request, 
+				jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		Iterable<Assignment> ass = assignmentInterface.getListByPrimaryKey(idAss);
+		model.addAttribute("listAss", ass);
+		
+		return "teacherEditAssignment";
+	}
+	@Transactional
+	@PostMapping("/editAss/{idAssignment}")
+	public String edit(@PathVariable("idAssignment") Integer idAss,
+			@RequestParam("roomId") Integer idRoom,
+			 @RequestParam("title") String title,
+		        @RequestParam("detail") String detail,
+		        @RequestParam("dueDate") String dueDate,
+		        @RequestParam("fullScore") Integer fullScore,
+			Model model, 
+			jakarta.servlet.http.HttpServletRequest request, 
+			jakarta.servlet.http.HttpServletResponse response) {
+	String authcheck = auth.isLoginMatch(request);
+	if (authcheck.equals("Auth") == false) {
+		return "redirect:/login";
+	}
+	
+	
+	String editAss = "UPDATE assignment a SET a.detail = ? , a.due_date = ? , a.full_score = ? , a.title = ? , a.updated_at = ? WHERE  a.id_assignment = ?";
+	entityManager.createNativeQuery(editAss)
+	.setParameter(1, detail)
+	.setParameter(2, dueDate)
+	.setParameter(3, fullScore)
+	.setParameter(4, title)
+	.setParameter(5, new Date())
+	.setParameter(6, idAss)
+	.executeUpdate();
+	return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
+}
+
+
 }
 
 
