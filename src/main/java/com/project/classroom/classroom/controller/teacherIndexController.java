@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.project.classroom.classroom.middleware.Auth;
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.Assignment_Room_Student;
 import com.project.classroom.classroom.model.Assignment_Room_StudentInterface;
@@ -26,6 +28,7 @@ import com.project.classroom.classroom.model.TeacherInterface;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 import jakarta.servlet.http.Cookie;
@@ -44,9 +47,16 @@ public class teacherIndexController {
 	
 	@Autowired
 	Assignment_Room_StudentInterface assignment_room_studentInterface;
+	
+	@Autowired
+    private Auth auth;
 
 	@GetMapping("/indexteacher")
     public String index(HttpServletRequest request, HttpServletResponse response,Model model) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
 		String userId = "";
 		String role = "";
 		Cookie[] cookies = request.getCookies();
@@ -70,7 +80,7 @@ public class teacherIndexController {
 		
 		List<Room> rooms = roomInterface.findByTeacherId(userId);
 		
-	
+		System.out.println(userId);
         model.addAttribute("roomList", rooms); 
         return "teacherIndex";
     }
@@ -81,6 +91,10 @@ public class teacherIndexController {
 	            @RequestParam("codeRoom") String codeRoom,
 	            @RequestParam("nameRoom") String nameRoom,
 	            Model model, HttpServletRequest request) throws Exception {
+	    	String authcheck = auth.isLoginMatch(request);
+			if (authcheck.equals("Auth") == false) {
+				return "redirect:/login";
+			}
 	 		String userId = "";
 			String role = "";
 			Cookie[] cookies = request.getCookies();
@@ -117,6 +131,10 @@ public class teacherIndexController {
 	    
 	    @GetMapping("/room/{roomid}/people/{studentId}/delete")
 	    public String deleteStudent(@PathVariable("roomid") int roomId,@PathVariable("studentId") int studentId,Model model, HttpServletRequest request) {
+	    	String authcheck = auth.isLoginMatch(request);
+			if (authcheck.equals("Auth") == false) {
+				return "redirect:/login";
+			}
 	    	System.out.println("Hello"+roomId);
 	    	String userId = "";
 			String role = "";
