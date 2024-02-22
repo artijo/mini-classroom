@@ -29,9 +29,7 @@
 				<img id="filePhoto" src="" class="w-full h-full object-cover p-3" alt="file photo${asscontent[0].file}">
 			</span>
 			<span>
-					<span id="fileName" class="inline block line-clamp-1 w-56">
-								 	${ass.file} 
-					</span>
+					<span id="fileName" class="inline block line-clamp-1 w-56">${asscontent[0].file} </span>
 					<span id="typeFile" class=" block text-slate-400"></span>
 			</span> 
 		 </a>

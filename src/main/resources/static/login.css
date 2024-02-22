@@ -8,10 +8,11 @@
 body {
     height: 100vh;
     margin: 0;
-    background-image: url('image/Cute-Anime-Wallpaper.png');
+    background-image: url('image/bg_classroom.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-blend-mode: lighten;
     /*fixให้รูปอยู่ด้านหลัง*/
     background-attachment: fixed;
     display: flex;
