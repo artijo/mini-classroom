@@ -67,7 +67,7 @@ img.navAss {
 					<div class="absolute w-full mt-1 rounded-xl h-1 line nav-line"></div>
 				</li>
 				<li class="text-xl w-fit font-semibold tracking-widest text-white relative">
-					<a href="/room/${assignment[0].room.idRoom}/people">
+					<a href="/room/${room[0].idRoom}/people">
 						บุคคล
 					</a>
 					<div class="absolute w-full mt-1 h-1 line rounded-xl nav-line"></div>

@@ -58,6 +58,7 @@ public class RoomController {
 	
 	@Autowired
 	private Auth auth;
+
 	
 	private boolean checkTeacher(String teacher,Integer idRoom) {
 		if(roomInterface.qq(idRoom, teacher).size() != 0) {
@@ -279,12 +280,14 @@ public class RoomController {
 		if(!checkTeacher(userId,roomId)) {
 			return "redirect:/indexteacher";
 		}
+		Iterable<Room> room = roomInterface.findByIdRoom(roomId);
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
 		Iterable<Room_Student> student = room_studentInterface.findByRoomId(roomId.toString());
 		model.addAttribute("assignment",assignment);
 		model.addAttribute("allListAssignment",allListAssignment);
 		model.addAttribute("student",student);
+		model.addAttribute("room",room);
 		return "teacherAssignment";
 	}
 	
@@ -310,7 +313,6 @@ public class RoomController {
 	    	.setParameter(3, idStu).executeUpdate();
 		return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
 	}
-	
 	@GetMapping("/delete/assignment/{idAss}/room/{idRoom}")
 	public String deleteAss(@PathVariable("idAss") Integer idAss,@PathVariable("idRoom") Integer idRoom) {
 		Iterable<Assignment> ass = assignmentInterface.getListByPrimaryKey(idAss);
@@ -342,8 +344,9 @@ public class RoomController {
 	@Transactional
 	@PostMapping("/editAss/{idAssignment}")
 	public String edit(@PathVariable("idAssignment") Integer idAss,
-			@RequestParam("roomId") Integer idRoom,
-			 @RequestParam("title") String title,
+				@RequestParam("roomId") Integer idRoom,
+				@RequestParam("title") String title,
+				@RequestParam("file") MultipartFile file,
 		        @RequestParam("detail") String detail,
 		        @RequestParam("dueDate") String dueDate,
 		        @RequestParam("fullScore") Integer fullScore,
@@ -351,19 +354,26 @@ public class RoomController {
 			jakarta.servlet.http.HttpServletRequest request, 
 			jakarta.servlet.http.HttpServletResponse response) {
 	String authcheck = auth.isLoginMatch(request);
+	UploadService service = new UploadService();
+	String filePath = "";
 	if (authcheck.equals("Auth") == false) {
 		return "redirect:/login";
 	}
-	
-	
-	String editAss = "UPDATE assignment a SET a.detail = ? , a.due_date = ? , a.full_score = ? , a.title = ? , a.updated_at = ? WHERE  a.id_assignment = ?";
+	 if (!file.isEmpty()) {
+		 filePath = service.upload(file);
+	 } else {
+		 filePath = "";
+	 }
+	System.out.println(filePath);
+	String editAss = "UPDATE assignment a SET a.detail = ? , a.due_date = ? , a.full_score = ? , a.title = ? , a.updated_at = ?, a.file = ?  WHERE  a.id_assignment = ?";
 	entityManager.createNativeQuery(editAss)
 	.setParameter(1, detail)
 	.setParameter(2, dueDate)
 	.setParameter(3, fullScore)
 	.setParameter(4, title)
 	.setParameter(5, new Date())
-	.setParameter(6, idAss)
+	.setParameter(6, filePath)
+	.setParameter(7, idAss)
 	.executeUpdate();
 	return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
 }

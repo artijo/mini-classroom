@@ -95,7 +95,7 @@
 						 			</c:when>
 						 			<c:otherwise>
 						 				<div class="fileAss my-5">
-								 			<a href="http://localhost:8899/file/${ass.file}" target="_blank" class="block flex items-center rounded-lg gap-5 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]" download>
+								 			<a href="http://localhost:8899/file/${ass.file}" target="_blank" download="download" class="block flex items-center rounded-lg gap-5 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]" download>
 								 				<span class="inline-block w-32 h-32">
 								 					<img id="filePhoto" src="" class="w-full h-full object-cover p-3" alt="file photo${ass.file}">
 								 				</span>
