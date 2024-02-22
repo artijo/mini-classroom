@@ -39,11 +39,20 @@
 				<h1 class="absolute text-2xl text-white bg-gray-600 py-2 px-3 w-fit text-start font-semibold rounded-tl-lg rounded-br-lg mb-5">คำสั่ง</h1>
 				
 				<div class="rside h-fit w-2/4 border rounded-lg relative pt-5 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]">
-					<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="delete-button absolute top-0 right-0 m-2 flex bg-red-500 rounded-2xl hover:bg-red-400">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
-						  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-						</svg>
-					</a>
+					<div class="absolute top-0 right-0 m-2 grid grid-cols-2 gap-2 ">
+						<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="delete-button flex bg-red-500 rounded-2xl hover:bg-red-400">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white p-0.5">
+							  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+							</svg>
+						</a>
+						<a href="/roomTeacher/delete/assignment/${assignment[0].idAssignment}/room/${assignment[0].room.idRoom}" class="edit-button flex bg-yellow-300 rounded-2xl hover:bg-yellow-400">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white p-0.5">
+							  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+							</svg>
+						</a>
+						
+					</div>
+					
 					<div class="rside-content">
 						<c:forEach items="${assignment}" var="ass">
 							<div class="rtop p-9 border-b-2">
