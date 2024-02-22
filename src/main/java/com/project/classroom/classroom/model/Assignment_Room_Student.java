@@ -26,7 +26,7 @@ public class Assignment_Room_Student {
 	@ManyToOne
 	@MapsId("studentId")
 	@JoinColumn(name = "student_id")
-	Student student;
+	Student student;	
 	
 	private int score;
 	private String filePath;

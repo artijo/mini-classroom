@@ -1,15 +1,9 @@
 package com.project.classroom.classroom.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Optional;
-
-import org.apache.catalina.connector.Response;
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.classroom.classroom.middleware.Auth;
 import com.project.classroom.classroom.model.Assignment;
 import com.project.classroom.classroom.model.AssignmentInterface;
 import com.project.classroom.classroom.model.Assignment_Room_Student;
@@ -29,9 +24,13 @@ import com.project.classroom.classroom.model.Room;
 import com.project.classroom.classroom.model.RoomInterface;
 import com.project.classroom.classroom.model.Room_Student;
 import com.project.classroom.classroom.model.Room_StudentInterface;
-import com.project.classroom.classroom.model.Student;
 import com.project.classroom.classroom.model.StudentInterface;
-import com.project.classroom.classroom.model.TeacherInterface;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
+import com.project.classroom.classroom.uploadservice.*;
 
 
 
@@ -39,26 +38,46 @@ import com.project.classroom.classroom.model.TeacherInterface;
 @RequestMapping("/roomTeacher")
 public class RoomController {
 
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	@Autowired
 	RoomInterface roomInterface;
+	
 	@Autowired
 	AssignmentInterface assignmentInterface;
+	
 	@Autowired
 	Assignment_Room_StudentInterface assignment_Room_Student;
+	
 	@Autowired
 	Room_StudentInterface room_studentInterface;
+	
 	@Autowired
 	StudentInterface studentinterface;
-	public String uploadDirectory = "D:" + File.separator + "Twachi web" + File.separator + "classroom" + File.separator +
-            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
+	
+	@Autowired
+	private Auth auth;
+
+	
+	private boolean checkTeacher(String teacher,Integer idRoom) {
+		if(roomInterface.qq(idRoom, teacher).size() != 0) {
+			System.out.println("ture");
+			return true;
+		}else {
+			System.out.println("false");
+			return false;
+		}
+	}
+	
+	
 	public static String covertToThaiTime(Date date) {
-	    SimpleDateFormat thaitime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", new Locale("th", "TH"));
+	    SimpleDateFormat thaitime = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("th", "TH"));
 	    String formattedDate = thaitime.format(date);
 	    String[] arrOfStr = formattedDate.split(" ");
 	    String[] dateArr = arrOfStr[0].split("/");
 	    String thaiDateString;
 	    String thaiTimeString = arrOfStr[1];
-	    
 	    switch (dateArr[1]) {
 	        case "01": {
 	            thaiDateString = dateArr[0] + " มกราคม " + dateArr[2];
@@ -119,7 +138,29 @@ public class RoomController {
 	
 //	GetRoom after click
 	@GetMapping("/room/{idRoom}")
-	public String getRoom(@PathVariable("idRoom") Integer idRoom, Model model) {
+	public String getRoom(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
+		}
 		Iterable<Room> room = roomInterface.findByIdRoom(idRoom);
 		Iterable<Assignment> assignment = assignmentInterface.getAssignmentOnRoom(idRoom);
 		model.addAttribute("room", room);
@@ -127,30 +168,38 @@ public class RoomController {
 		return "teacherRoom";
 	}
 	
+
 //	Route to Insert Page
 	@GetMapping("/insert/{idRoom}")
-	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model) {
+	public String insertPage(@PathVariable("idRoom") Integer idRoom, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
+		}
 		model.addAttribute("idRoom",idRoom);
 		return "teacherInsert";
-		
 	}
 	
-	public String upload(MultipartFile file) {
-	    try {
-	        String originalFilename = file.getOriginalFilename();
-	        String uniqueFileName = System.currentTimeMillis() + "&" + originalFilename;
-	        File directory = new File(uploadDirectory);
-	        if (!directory.exists()) {
-	            directory.mkdirs();
-	        }
-	        file.transferTo(new File(directory, uniqueFileName));
-	        return uniqueFileName;
-	    } catch (IOException e) {
-	        e.printStackTrace(); 
-	        return "Upload unsuccessful";
-	    }
-	}
 
+	
 	@PostMapping("/insertToDatabase")
 	public String insertAssignment(
 	        @RequestParam("idRoom") Integer idRoom,
@@ -159,15 +208,44 @@ public class RoomController {
 	        @RequestParam("dueDate") String dueDate,
 	        @RequestParam("fullScore") Integer fullScore,
 	        @RequestParam("file") MultipartFile file,
-	        Model model) throws Exception {
+	        Model model, HttpServletRequest request) throws Exception {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {	
+			return "redirect:/login";
+		}
+		if(!checkTeacher(userId,idRoom)) {
+			return "redirect:/indexteacher";
+		}
+		
+//		Room Object
 	    Room roomId = new Room();
 	    roomId.setIdRoom(idRoom);
+//	    Assignment Object
 	    Assignment newAssignment = new Assignment();
+//	    Upload service
+	    UploadService service = new UploadService();
+//	    Check file is Empty
 	    if (!file.isEmpty()) {
-	        newAssignment.setFile(upload(file));
+	        newAssignment.setFile(service.upload(file));
 	    } else {
 	        newAssignment.setFile(null);
 	    }
+	   
 	    newAssignment.setTitle(title);
 	    newAssignment.setDueDate(dueDate);
 	    newAssignment.setDetail(detail);
@@ -178,16 +256,129 @@ public class RoomController {
 	    return "redirect:/roomTeacher/room/" + idRoom;
 	}
 
-	@GetMapping("/assignment/{idAssignment}")
-	public String getAssignment(@PathVariable("idAssignment") Integer idAss, Model model) {
+	@GetMapping("/assignment/{idAssignment}/{roomId}")
+	public String getAssignment(@PathVariable("idAssignment") Integer idAss,@PathVariable("roomId") Integer roomId, Model model, jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		String userId = "";
+		String role = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals("user")) {
+					userId = c.getValue();
+				} else if (c.getName().equals("role")) {
+					role = c.getValue();
+				}
+			}
+		}
+		if (userId.equals("") || role.equals("")) {
+			return "redirect:/login";
+		}
+		if(!checkTeacher(userId,roomId)) {
+			return "redirect:/indexteacher";
+		}
+		Iterable<Room> room = roomInterface.findByIdRoom(roomId);
 		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);	
 		Iterable<Assignment> assignment = assignmentInterface.getListByPrimaryKey(idAss);
-		Iterable<Student> student = studentinterface.findAll(); 
+		Iterable<Room_Student> student = room_studentInterface.findByRoomId(roomId.toString());
 		model.addAttribute("assignment",assignment);
 		model.addAttribute("allListAssignment",allListAssignment);
 		model.addAttribute("student",student);
+		model.addAttribute("room",room);
 		return "teacherAssignment";
 	}
+	
+	
+	
+	@Transactional
+	@PostMapping("/insertScore/{assId}/{roomId}")
+	public String updateScore(
+			@PathVariable("assId") Integer idAss,
+			@PathVariable("roomId") Integer idRoom,
+			@RequestParam("studentId") Integer idStu,
+			@RequestParam("score") Integer score,
+			Model model, HttpServletRequest request) 
+	{
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		String updateNative = "UPDATE Assignment_Room_Student a SET a.score = ? WHERE a.assignment_id = ? AND a.student_id = ?";
+    	entityManager.createNativeQuery(updateNative)
+	    	.setParameter(1, score)
+	    	.setParameter(2, idAss)
+	    	.setParameter(3, idStu).executeUpdate();
+		return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
+	}
+	@GetMapping("/delete/assignment/{idAss}/room/{idRoom}")
+	public String deleteAss(@PathVariable("idAss") Integer idAss,@PathVariable("idRoom") Integer idRoom) {
+		Iterable<Assignment> ass = assignmentInterface.getListByPrimaryKey(idAss);
+		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getRelationByIdAssKey(idAss);
+		if(allListAssignment != null) {
+			assignment_Room_Student.deleteAll(allListAssignment);
+		}
+		for(Assignment assItem : ass) {
+			assignmentInterface.delete(assItem);
+			break;
+		}
+		return "redirect:/roomTeacher/room/"+idRoom;
+	}
+	
+	@GetMapping("/editAss/{idAssignment}")
+		public String editAss(@PathVariable("idAssignment") Integer idAss,
+				Model model, 
+				jakarta.servlet.http.HttpServletRequest request, 
+				jakarta.servlet.http.HttpServletResponse response) {
+		String authcheck = auth.isLoginMatch(request);
+		if (authcheck.equals("Auth") == false) {
+			return "redirect:/login";
+		}
+		Iterable<Assignment> ass = assignmentInterface.getListByPrimaryKey(idAss);
+		model.addAttribute("listAss", ass);
+		
+		return "teacherEditAssignment";
+	}
+	@Transactional
+	@PostMapping("/editAss/{idAssignment}")
+	public String edit(@PathVariable("idAssignment") Integer idAss,
+				@RequestParam("roomId") Integer idRoom,
+				@RequestParam("title") String title,
+				@RequestParam("file") MultipartFile file,
+		        @RequestParam("detail") String detail,
+		        @RequestParam("dueDate") String dueDate,
+		        @RequestParam("fullScore") Integer fullScore,
+			Model model, 
+			jakarta.servlet.http.HttpServletRequest request, 
+			jakarta.servlet.http.HttpServletResponse response) {
+	String authcheck = auth.isLoginMatch(request);
+	UploadService service = new UploadService();
+	String filePath = "";
+	if (authcheck.equals("Auth") == false) {
+		return "redirect:/login";
+	}
+	 if (!file.isEmpty()) {
+		 filePath = service.upload(file);
+	 } else {
+		 filePath = "";
+	 }
+	System.out.println(filePath);
+	String editAss = "UPDATE assignment a SET a.detail = ? , a.due_date = ? , a.full_score = ? , a.title = ? , a.updated_at = ?, a.file = ?  WHERE  a.id_assignment = ?";
+	entityManager.createNativeQuery(editAss)
+	.setParameter(1, detail)
+	.setParameter(2, dueDate)
+	.setParameter(3, fullScore)
+	.setParameter(4, title)
+	.setParameter(5, new Date())
+	.setParameter(6, filePath)
+	.setParameter(7, idAss)
+	.executeUpdate();
+	return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
+}
+
+
 }
 
 

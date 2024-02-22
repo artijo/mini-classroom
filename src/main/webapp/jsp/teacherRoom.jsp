@@ -10,6 +10,12 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+
+	<header>
+		<jsp:include page="template/navbarTeacher.jsp"/>
+	</header>
+
+
 	<div class="overlay fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-black hidden z-20">
 		<div class="continer form absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-">
 	    	<form action="#" class=" w-96 max-w-xl border rounded-lg p-5 relative mx-auto bg-white"  enctype="multipart/form-data" method="post">
@@ -21,8 +27,6 @@
 			                <button type="submit" class="py-2 px-3 rounded-lg text-white bg-pink-300 hover:bg-pink-400 border text-xs">อัพโหลดไฟล์</button>
 			                <button id="cancelbtn" type="button" class="py-2 px-3 rounded-lg text-black bg-gray-100 hover:bg-gray-200 border text-xs">ยกเลิก</button>
 		                </div>
-		                
-		            	
 		            </div>
 		        </div>
 		    </form>
@@ -30,11 +34,10 @@
 	</div>
 	
 	<main>
-		<div class="container mx-auto">
-	        <div class="content max-w-5xl mx-auto my-5">
+		<div class="container max-w-screen-xl mx-auto mb-20">
+	        <div class="content">
 	            <div class="Thumbnail relative mb-5 z-0 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
-	                <span id="editIcon" class="block absolute right-0 m-2 cursor-pointer bg-pink-300 rounded-lg w-10 h-10"><img class="rounded-lg" src="http://localhost:8899/icon/icon.svg"></span>
-	                <img src="http://localhost:8899/image/wallpaper-test.webp" alt="Thumbnail //name//" class="rounded-lg w-full h-full object-fill"> 
+	                <img src="http://localhost:8899/image/${room[0].thumbnail}" alt="Thumbnail" class="rounded-lg w-full h-full object-cover"> 
 	                <span class="absolute line-clamp-1 bottom-0 p-5 text-3xl font-medium antialiased text-white">
 	                    ${room[0].nameRoom}
 	                </span>
@@ -48,15 +51,17 @@
 	                    </div>
 	                </div>
 	                <!-- Right -->
+	                 <a href="/roomTeacher/insert/${room[0].idRoom}">
 	                <div class="right-side w-3/4 grid grid-cols-1 gap-5">
-	                	<div class="addgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full border py-3 px-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
+	                	<div class="addgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full h-[90px] border py-3 px-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
 		                     <div class="profile w-12 h-12">
-		                         <img src="http://localhost:8899/image/Cute-Anime-Wallpaper.png" alt="Cute anime" class="w-full h-full object-cover rounded-full">
+		                         <img src="http://localhost:8899/image/logo_crop.png" alt="Cute anime" class="w-full h-full object-cover rounded-full">
 		                     </div>
-		                     <a href="/roomTeacher/insert/${room[0].idRoom}">
+		                    
 		                        <span class="text-sm font-thin text-gray-400">เพิ่มงานในชั้นเรียน</span>
-		                     </a>
+		                    
 	                    </div>
+	                     </a>
 	                	<c:forEach items="${assignment}" var="ass">
 	                		<div class="assgroup hover:cursor-pointer active:bg-gray-100 flex items-center gap-2 profile w-full border py-3 px-10 rounded-lg">
 	                            <div class="icon-ass w-12 h-12">
@@ -64,7 +69,7 @@
 	                            </div>
 	                            <div class="info w-3/4">
 	                                <h5 class="line-clamp-1 font-medium text-sm">
-	                                    <a href="/roomTeacher/assignment/${ass.idAssignment}">${ass.title}</a>
+	                                    <a href="/roomTeacher/assignment/${ass.idAssignment}/${room[0].idRoom}">${ass.title}</a>
 	                                </h5>
 	                                <p class="text-xs text-gray">
 	                                	${RoomController.covertToThaiTime(ass.createdAt)}
