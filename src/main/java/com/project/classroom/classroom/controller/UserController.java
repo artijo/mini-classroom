@@ -34,7 +34,7 @@ public class UserController {
 		return "login";
 	}
 	@PostMapping("/login")
-	public String loginPost(HttpServletResponse res, HttpServletRequest req,@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role) {
+	public String loginPost(HttpServletResponse res, HttpServletRequest req,@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("role") String role, Model model) {
 		if (role.equals("student")) {
 			Student std = studentInterface.findByEmail(email);
 			if (std != null) {
@@ -50,6 +50,9 @@ public class UserController {
 					session.setAttribute("useremail", std.getEmail());
 					return "redirect:/";
 				}
+			}else {
+				model.addAttribute("error", "ไม่พบผู้ใช้ โปรดตรวจสอบอีเมลและรหัสผ่านอีกครั้ง");
+				return "login";
 			}
 		} else {
 			Teacher teacher = teacherInterface.findByEmail(email);
@@ -65,6 +68,9 @@ public class UserController {
 					session.setAttribute("useremail", teacher.getEmail());
 					return "redirect:/";
 				}
+			} else {
+				model.addAttribute("error", "ไม่พบผู้ใช้ โปรดตรวจสอบอีเมลและรหัสผ่านอีกครั้ง");
+				return "login";
 			}
 		}
 		return "redirect:/login";

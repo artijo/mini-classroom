@@ -41,6 +41,9 @@
 			<label for="password" class="titel">Password:</label>
 			<input type="password" id="password" name="password" required>
 		<br>
+		<c:if test="${not empty error}">
+		    <p class="error">${error}</p>
+		 </c:if>
 			<br>
 			<input type="submit" value="Login">
 	</form>
