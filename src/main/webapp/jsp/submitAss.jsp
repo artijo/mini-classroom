@@ -10,6 +10,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+<a href="/room/${roomcontent[0].idRoom}/submit"
+		class="bg-amber-200 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[10px] ">ย้อนกลับ</a>
 	<div class="flex justify-center  gap-[20px] h-auto mx-[10px] my-[10px]">
 		<!-- left side -->
 		<div
@@ -85,8 +87,7 @@
 		</div>
 
 	</div>
-	<a href="/room/${roomcontent[0].idRoom}/submit"
-		class="bg-green-400 rounded-lg p-[5px] text-white hover:bg-green-600 ml-[10px]">ย้อนกลับ</a>
+	
 </body>
 <script type="text/javascript">
  const fileName = document.getElementById("fileName");

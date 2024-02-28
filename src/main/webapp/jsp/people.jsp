@@ -9,16 +9,26 @@
  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="ml-[10px] mt-[10px]">
-<div class="container w-[50%] mx-auto mt-[20px] bg-orange-50 p-[10px]  rounded-lg shadow-md h-auto">
+<c:choose>
+<c:when test="${role == 'student'}">
+<a href="/room/${room.idRoom }/submit"
+		class="bg-amber-200 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[10px] ">ย้อนกลับ</a>
+</c:when>
+<c:otherwise>
+<a href="/roomTeacher/room/${room.idRoom }"
+		class="bg-amber-200 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[10px] ">ย้อนกลับ</a>
+</c:otherwise>
+</c:choose>
+<div class="container w-[50%] mx-auto mt-[20px] bg-[#474F7A] p-[10px]  rounded-lg shadow-md h-auto">
 <div class="mx-auto w-fit h-auto">
- <h2 class="text-lg my-[10px]">ผู้สอน</h2>
-   	<div class="bg-yellow-50  w-[500px] p-[10px] mt-[10px] rounded-lg shadow-md shadow-yellow-200 mb-[10px]" >
+ <h2 class="text-lg my-[10px] text-white">ผู้สอน</h2>
+   	<div class="bg-[#fda4af]  w-[500px] p-[10px] mt-[10px] rounded-lg shadow-md mb-[10px] text-white" >
    		<c:out value="${room.teacher.fname}"></c:out>
         <c:out value="${room.teacher.lname}"></c:out>
    	</div>
-   	 <h2 class="text-lg my-[10px]">นักศึกษา</h2>
+   	 <h2 class="text-lg my-[10px] text-white">นักศึกษา</h2>
    	   	<c:forEach var="std" items="${students}">
-   	   	<div class="bg-yellow-50  w-[500px] p-[10px] mt-[10px] rounded-lg shadow-md shadow-yellow-200 mb-[10px]" >
+   	   	<div class="bg-[#fda4af] w-[500px] p-[10px] mt-[10px] rounded-lg shadow-md mb-[10px] text-white" >
    	   	<c:out value="${std.student.fname}"></c:out>
 		<c:out value="${std.student.lname}"></c:out>
    	   	</div>

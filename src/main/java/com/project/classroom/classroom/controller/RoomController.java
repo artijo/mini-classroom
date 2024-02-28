@@ -375,7 +375,28 @@ public class RoomController {
 	.executeUpdate();
 	return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
 }
-
+	@GetMapping("/delete/{idRoom}")
+	public String deleteRoom(@PathVariable("idRoom") Integer idRoom){
+		Iterable<Assignment> ass = assignmentInterface.getAssignmentOnRoom(idRoom);
+		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getArsByRoom(idRoom);
+		Iterable<Room_Student> room_std = room_studentInterface.findByRoomId(idRoom.toString());
+		Iterable<Room> room =  roomInterface.findByIdRoom(idRoom);
+		if(allListAssignment != null) {
+			assignment_Room_Student.deleteAll(allListAssignment);
+		}
+		if(ass != null) {
+			assignmentInterface.deleteAll(ass);
+		}
+		if (room_std != null) {
+		    room_studentInterface.deleteAll(room_std);
+		}
+		if (room != null) {
+			roomInterface.deleteById(idRoom);
+		}
+		roomInterface.deleteById(idRoom);
+	
+		return "redirect:/indexteacher";
+	}
 
 }
 
