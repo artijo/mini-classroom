@@ -8,7 +8,7 @@
 <title>People</title>
  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="ml-[10px] mt-[10px]">
+<body class="ml-[10px] ">
 <c:choose>
 <c:when test="${role == 'student'}">
 <a href="/room/${room.idRoom }/submit"
@@ -19,7 +19,10 @@
 		class="bg-amber-200 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[10px] ">ย้อนกลับ</a>
 </c:otherwise>
 </c:choose>
+
+
 <div class="container w-[50%] mx-auto mt-[20px] bg-[#474F7A] p-[10px]  rounded-lg shadow-md h-auto">
+<h1 class="mt-[20px] text-center text-lg font-bold text-white" >รายชื่อในห้องเรียน</h1>
 <div class="mx-auto w-fit h-auto">
  <h2 class="text-lg my-[10px] text-white">ผู้สอน</h2>
    	<div class="bg-[#fda4af]  w-[500px] p-[10px] mt-[10px] rounded-lg shadow-md mb-[10px] text-white" >
@@ -33,7 +36,7 @@
 		<c:out value="${std.student.lname}"></c:out>
    	   	</div>
 		<c:if test="${role == 'teacher'}">
-		    <a href="/room/${room.idRoom }/people/${std.student.idStudent}/delete">Remove</a>
+		    <a href="/room/${room.idRoom }/people/${std.student.idStudent}/delete" class="bg-red-500 rounded-lg text-white p-[5px] hover:bg-red-600">Remove</a>
 		</c:if>
 			<br>
 			<br>
