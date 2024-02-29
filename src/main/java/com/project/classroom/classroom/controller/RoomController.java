@@ -1,6 +1,5 @@
 package com.project.classroom.classroom.controller;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -377,7 +375,28 @@ public class RoomController {
 	.executeUpdate();
 	return "redirect:/roomTeacher/assignment/"+idAss+"/"+idRoom;
 }
-
+	@GetMapping("/delete/{idRoom}")
+	public String deleteRoom(@PathVariable("idRoom") Integer idRoom){
+		Iterable<Assignment> ass = assignmentInterface.getAssignmentOnRoom(idRoom);
+		Iterable<Assignment_Room_Student> allListAssignment = assignment_Room_Student.getArsByRoom(idRoom);
+		Iterable<Room_Student> room_std = room_studentInterface.findByRoomId(idRoom.toString());
+		Iterable<Room> room =  roomInterface.findByIdRoom(idRoom);
+		if(allListAssignment != null) {
+			assignment_Room_Student.deleteAll(allListAssignment);
+		}
+		if(ass != null) {
+			assignmentInterface.deleteAll(ass);
+		}
+		if (room_std != null) {
+		    room_studentInterface.deleteAll(room_std);
+		}
+		if (room != null) {
+			roomInterface.deleteById(idRoom);
+		}
+		roomInterface.deleteById(idRoom);
+	
+		return "redirect:/indexteacher";
+	}
 
 }
 

@@ -38,7 +38,7 @@
 	        <div class="content">
 	            <div class="Thumbnail relative mb-5 z-0 relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w">
 	                <img src="http://localhost:8899/image/${room[0].thumbnail}" alt="Thumbnail" class="rounded-lg w-full h-full object-cover"> 
-	                <span class="absolute line-clamp-1 bottom-0 p-5 text-3xl font-medium antialiased text-white">
+	                <span class="absolute line-clamp-1 bottom-0 m-5 p-2 text-3xl font-medium antialiased  rounded-lg  bg-white text-black">
 	                    ${room[0].nameRoom}
 	                </span>
 	            </div>

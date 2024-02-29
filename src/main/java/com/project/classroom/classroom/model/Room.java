@@ -23,6 +23,7 @@ public class Room {
 	
 	@ManyToOne
 	@JoinColumn(name = "idTeacher")
+	
 	private Teacher teacher;
 	private Date createdAt;
 	private Date updatedAt;

@@ -19,7 +19,7 @@
  <section class="h-48 mr-auto ml-auto mt-10 rounded-lg content max-w-5xl mx-auto my-5 " >
        <div class="Thumbnail relative mb-5 z-0 relative relative h-80 bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700w"> 
         <img src="http://localhost:8899/image/${rooms.thumbnail}"alt="pic" class="object-cover h-full w-full rounded-lg opacity-2"> 
-        <h1 class="absolute bottom-5 left-2 text-4xl text-white drop-shadow-lg uppercase">${rooms.nameRoom}</h1>
+        <h1 class="absolute bottom-5 left-2 text-4xl  drop-shadow-lg uppercase bg-white text-black rounded-lg	p-[5px]">${rooms.nameRoom}</h1>
         </div>
     </section>        
 </div>

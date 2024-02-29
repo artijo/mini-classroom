@@ -95,7 +95,7 @@
 						 			</c:when>
 						 			<c:otherwise>
 						 				<div class="fileAss my-5">
-								 			<a href="http://localhost:8899/file/${ass.file}" target="_blank" download="download" class="block flex items-center rounded-lg gap-5 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]" download>
+								 			<a href="http://localhost:8899/file/${ass.file}" target="_blank"  class="block flex items-center rounded-lg gap-5 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]" download>
 								 				<span class="inline-block w-32 h-32">
 								 					<img id="filePhoto" src="" class="w-full h-full object-cover p-3" alt="file photo${ass.file}">
 								 				</span>
@@ -154,9 +154,8 @@
 																	<span class="text-l font-bold text-pink-500">ส่งแล้ว</span>
 																</td>
 																<td class="py-5 flex justify-center item-center">
-																	<img alt="" src="./image/icon_edit.png" onclick="editPostPopup()">
-															
-																	<a class="w-10  line-clamp-1 text-bold underline h-fit file" href="http://localhost:8899/image/logo_crop.png">${assItem.filePath}</a>
+																	
+																	<a class="w-10  line-clamp-1 text-bold underline h-fit file" href="http://localhost:8899/file/${assItem.filePath}" title="${assItem.filePath }">${assItem.filePath}</a>
 																</td>
 																<td class="py-5 cursor-pointer hover:bg-pink-500 editIcon " title="เพิ่มคะแนนของ ${stuItem.student.studentId}" onclick="student(${stuItem.student.idStudent})">
 																		<span  class="cursor-pointer text-l font-bold text-black"> ${assItem.score} </span>
