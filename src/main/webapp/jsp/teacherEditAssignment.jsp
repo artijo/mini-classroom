@@ -11,7 +11,7 @@
 	<header>
 		<div class="topNav bg-[#474F7A] h-24 mb-10 pl-10 flex items-center gap-5">
 			<div class="icon">
-				<a href="/roomTeacher/room/${idRoom}" class="h-full">
+				<a href="/roomTeacher/room/${listAss[0].room.idRoom}" class="h-full">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-white">
 					  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 					</svg>

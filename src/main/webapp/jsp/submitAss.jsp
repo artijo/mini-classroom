@@ -11,22 +11,22 @@
 </head>
 <body>
 <a href="/room/${roomcontent[0].idRoom}/submit"
-		class="bg-amber-200 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[10px] ">ย้อนกลับ</a>
+		class="bg-amber-300 rounded-lg p-[10px] text-white hover:bg-amber-400 ml-[1px] ">ย้อนกลับ</a>
 	<div class="flex justify-center  gap-[20px] h-auto mx-[10px] my-[10px]">
 		<!-- left side -->
 		<div
 			class="shadow dark:bg-gray-800 dark:border-gray-700w border-indigo-600 p-6 w-2/4 h-[500px] rounded-lg">
 			<h1 class="text-lg">หัวข้อ : ${asscontent[0].title}</h1>
 			<p>${roomcontent[0].teacher.fname}
-				${roomcontent[0].teacher.lname} : ${RoomController.covertToThaiTime( asscontent[0].createdAt)}</p>
-			<p>รายละเอียดคำสั่ง : ${asscontent[0].detail}</p>
-			<div class="flex gap-[55%] my-[20px]">
-				<p>${asscontent[0].fullScore}คะแนน</p>
-				<p>due:
+				${roomcontent[0].teacher.lname} : ${RoomController.covertToThaiTime( asscontent[0].createdAt)}</p> <br>
+			<p>รายละเอียดคำสั่ง : ${asscontent[0].detail}</p> 
+			<div class="flex gap-[40%] my-[20px]">
+				<p>คะแนนงาน : ${asscontent[0].fullScore} คะแนน</p>
+				<p>กำหนดส่งงาน:
 					${RoomController.covertToThaiTime(asscontent[0].dueDate)}</p>
 			</div>
 			<hr>
-			<div class="border-2 my-[10px]">
+			<div class=" my-[10px]">
 				<c:choose>
 					<c:when test="${empty asscontent[0].file}">
 						<h2>ไม่มีไฟล์แนบ</h2>
@@ -35,7 +35,7 @@
 						<a href="http://localhost:8899/file/${asscontent[0].file}"
 							target="_blank"
 							class="block flex items-center rounded-lg gap-5 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"
-							download> <span class="inline-block w-32 h-32"> <img
+							> <span class="inline-block w-32 h-32"> <img
 								id="filePhoto" src="" class="w-full h-full object-cover p-3"
 								alt="file photo${asscontent[0].file}">
 						</span> <span> <span id="fileName"

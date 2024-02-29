@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UploadService {
 
-    private String path = "E:" + File.separator + "Github" + File.separator + "classroom" + File.separator +
+//	private  String pathStatic
+	
+	@Value("${pathStatic}")
+    private String path = "D:" + File.separator + "java" + File.separator + "project" + File.separator +"classroom"+ File.separator +
     "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "file";
 
     
